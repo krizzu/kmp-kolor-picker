@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    implementation("com.kborowy:color-picker:<latest-version>")
+    implementation("com.kborowy:kolor-picker:<latest-version>")
 }
 ```
 
