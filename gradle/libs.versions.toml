@@ -25,3 +25,4 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 publish = { id = "com.vanniktech.maven.publish", version.ref = "publish" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
+validator-abi = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version = "0.18.1" }

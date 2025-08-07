@@ -43,7 +43,7 @@ fun KolorPicker(
 
     Row(modifier = modifier) {
         HSVPicker(
-            selectedHue = selectedHue,
+            selectedColor = selectedHue,
             onColorSelected = onColorSelected,
             thumbConfig = pickerThumbConfig,
             modifier = Modifier.weight(9f),

@@ -43,12 +43,12 @@ import com.kborowy.colorpicker.ext.toHueDegree
 
 @Composable
 internal fun HSVPicker(
-    selectedHue: Color,
+    selectedColor: Color,
     onColorSelected: (Color) -> Unit,
     modifier: Modifier = Modifier,
     thumbConfig: PickerThumbConfig = PickerThumbConfig.Default,
 ) {
-    val initialSelectedHue = remember { selectedHue }
+    val initialSelectedHue = remember { selectedColor }
     var rectSize by remember { mutableStateOf(IntSize.Zero) }
     var selectorPosition by remember { mutableStateOf(Offset.Zero) }
     val thumbSizePx = with(LocalDensity.current) { thumbConfig.size.toPx() }
@@ -61,11 +61,11 @@ internal fun HSVPicker(
             )
     }
 
-    LaunchedEffect(rectSize, selectorPosition, selectedHue) {
+    LaunchedEffect(rectSize, selectorPosition, selectedColor) {
         if (rectSize == IntSize.Zero || selectorPosition == Offset.Zero) {
             return@LaunchedEffect
         }
-        val hue = selectedHue.toHueDegree()
+        val hue = selectedColor.toHueDegree()
         val saturation = selectorPosition.x / (rectSize.width - thumbSizePx / 2)
         val value = 1f - selectorPosition.y / (rectSize.height - thumbSizePx / 2)
         val color = Color.fromHsv(hue, saturation, value)
@@ -93,7 +93,7 @@ internal fun HSVPicker(
                     detectDragGestures { change, _ -> updatePosition(change.position) }
                 }
     ) {
-        drawRect(Brush.horizontalGradient(listOf(Color.White, selectedHue)))
+        drawRect(Brush.horizontalGradient(listOf(Color.White, selectedColor)))
         drawRect(Brush.verticalGradient(listOf(Color.Transparent, Color.Black)))
         drawCircle(
             color = thumbConfig.color,

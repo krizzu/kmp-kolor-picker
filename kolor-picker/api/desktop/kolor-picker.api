@@ -1,0 +1,52 @@
+public final class com/kborowy/colorpicker/KolorPickerKt {
+	public static final fun KolorPicker-T042LqI (Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;JLcom/kborowy/colorpicker/components/HueSliderThumbConfig;Lcom/kborowy/colorpicker/components/PickerThumbConfig;Landroidx/compose/runtime/Composer;II)V
+}
+
+public final class com/kborowy/colorpicker/components/HueSliderThumbConfig {
+	public static final field $stable I
+	public static final field Companion Lcom/kborowy/colorpicker/components/HueSliderThumbConfig$Companion;
+	public synthetic fun <init> (FJFFILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (FJFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-D9Ej5fM ()F
+	public final fun component2-0d7_KjU ()J
+	public final fun component3-D9Ej5fM ()F
+	public final fun component4 ()F
+	public final fun copy-_9Qs8tE (FJFF)Lcom/kborowy/colorpicker/components/HueSliderThumbConfig;
+	public static synthetic fun copy-_9Qs8tE$default (Lcom/kborowy/colorpicker/components/HueSliderThumbConfig;FJFFILjava/lang/Object;)Lcom/kborowy/colorpicker/components/HueSliderThumbConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getBorderRadius ()F
+	public final fun getBorderSize-D9Ej5fM ()F
+	public final fun getColor-0d7_KjU ()J
+	public final fun getHeight-D9Ej5fM ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/kborowy/colorpicker/components/HueSliderThumbConfig$Companion {
+	public final fun getDefault ()Lcom/kborowy/colorpicker/components/HueSliderThumbConfig;
+}
+
+public final class com/kborowy/colorpicker/components/PickerThumbConfig {
+	public static final field $stable I
+	public static final field Companion Lcom/kborowy/colorpicker/components/PickerThumbConfig$Companion;
+	public synthetic fun <init> (FJILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (FJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1-D9Ej5fM ()F
+	public final fun component2-0d7_KjU ()J
+	public final fun copy-cXLIe8U (FJ)Lcom/kborowy/colorpicker/components/PickerThumbConfig;
+	public static synthetic fun copy-cXLIe8U$default (Lcom/kborowy/colorpicker/components/PickerThumbConfig;FJILjava/lang/Object;)Lcom/kborowy/colorpicker/components/PickerThumbConfig;
+	public fun equals (Ljava/lang/Object;)Z
+	public final fun getColor-0d7_KjU ()J
+	public final fun getSize-D9Ej5fM ()F
+	public fun hashCode ()I
+	public fun toString ()Ljava/lang/String;
+}
+
+public final class com/kborowy/colorpicker/components/PickerThumbConfig$Companion {
+	public final fun getDefault ()Lcom/kborowy/colorpicker/components/PickerThumbConfig;
+}
+
+public final class com/kborowy/colorpicker/ext/ColorExtKt {
+	public static final fun toHex-8_81llA (J)Ljava/lang/String;
+}
+

@@ -2,8 +2,8 @@
 
 A customizable color picker component for Compose Multiplatform with hue slider and 2D color selection.
 
-![Kotlin Version](https://img.shields.io/badge/Kotlin-2.1.21-blue?logo=kotlin)
-![CMP](https://img.shields.io/badge/compose_multiplatform-1.8.0-green)
+![Kotlin Version](https://img.shields.io/badge/Kotlin-2.2.0-blue?logo=kotlin)
+![CMP](https://img.shields.io/badge/compose_multiplatform-1.8.2-green)
 ![License](https://img.shields.io/github/license/krizzu/kolor-picker)
 ![Maven Central](https://img.shields.io/maven-central/v/com.kborowy/kolor-picker)
 ![GitHub Release](https://img.shields.io/github/v/release/krizzu/kolor-picker?include_prereleases&label=github%20release)
