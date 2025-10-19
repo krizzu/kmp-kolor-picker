@@ -1,15 +1,15 @@
 [versions]
-agp = "8.5.2"
-android-compileSdk = "35"
+agp = "8.12.3"
+android-compileSdk = "36"
 android-minSdk = "21"
-android-targetSdk = "35"
-androidx-activityCompose = "1.10.1"
-androidx-lifecycle = "2.8.4"
-compose-multiplatform = "1.8.2"
-kotlin = "2.2.0"
+android-targetSdk = "36"
+androidx-activityCompose = "1.11.0"
+androidx-lifecycle = "2.9.5"
+compose-multiplatform = "1.9.1"
+kotlin = "2.2.20"
 kotlinx-coroutines = "1.10.2"
-publish = "0.32.0-rc1"
-spotless = "6.25.0"
+publish = "0.34.0"
+spotless = "8.0.0"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activityCompose" }
@@ -25,4 +25,3 @@ composeCompiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "k
 kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 publish = { id = "com.vanniktech.maven.publish", version.ref = "publish" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
-validator-abi = { id = "org.jetbrains.kotlinx.binary-compatibility-validator", version = "0.18.1" }

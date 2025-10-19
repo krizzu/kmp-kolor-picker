@@ -1,0 +1,63 @@
+// Klib ABI Dump
+// Targets: [iosArm64, iosSimulatorArm64, iosX64, wasmJs]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <kolor-picker-cmp:kolor-picker>
+final class com.kborowy.colorpicker.components/HueSliderThumbConfig { // com.kborowy.colorpicker.components/HueSliderThumbConfig|null[0]
+    constructor <init>(androidx.compose.ui.unit/Dp = ..., androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.unit/Dp = ..., kotlin/Float = ...) // com.kborowy.colorpicker.components/HueSliderThumbConfig.<init>|<init>(androidx.compose.ui.unit.Dp;androidx.compose.ui.graphics.Color;androidx.compose.ui.unit.Dp;kotlin.Float){}[0]
+
+    final val borderRadius // com.kborowy.colorpicker.components/HueSliderThumbConfig.borderRadius|{}borderRadius[0]
+        final fun <get-borderRadius>(): kotlin/Float // com.kborowy.colorpicker.components/HueSliderThumbConfig.borderRadius.<get-borderRadius>|<get-borderRadius>(){}[0]
+    final val borderSize // com.kborowy.colorpicker.components/HueSliderThumbConfig.borderSize|{}borderSize[0]
+        final fun <get-borderSize>(): androidx.compose.ui.unit/Dp // com.kborowy.colorpicker.components/HueSliderThumbConfig.borderSize.<get-borderSize>|<get-borderSize>(){}[0]
+    final val color // com.kborowy.colorpicker.components/HueSliderThumbConfig.color|{}color[0]
+        final fun <get-color>(): androidx.compose.ui.graphics/Color // com.kborowy.colorpicker.components/HueSliderThumbConfig.color.<get-color>|<get-color>(){}[0]
+    final val height // com.kborowy.colorpicker.components/HueSliderThumbConfig.height|{}height[0]
+        final fun <get-height>(): androidx.compose.ui.unit/Dp // com.kborowy.colorpicker.components/HueSliderThumbConfig.height.<get-height>|<get-height>(){}[0]
+
+    final fun component1(): androidx.compose.ui.unit/Dp // com.kborowy.colorpicker.components/HueSliderThumbConfig.component1|component1(){}[0]
+    final fun component2(): androidx.compose.ui.graphics/Color // com.kborowy.colorpicker.components/HueSliderThumbConfig.component2|component2(){}[0]
+    final fun component3(): androidx.compose.ui.unit/Dp // com.kborowy.colorpicker.components/HueSliderThumbConfig.component3|component3(){}[0]
+    final fun component4(): kotlin/Float // com.kborowy.colorpicker.components/HueSliderThumbConfig.component4|component4(){}[0]
+    final fun copy(androidx.compose.ui.unit/Dp = ..., androidx.compose.ui.graphics/Color = ..., androidx.compose.ui.unit/Dp = ..., kotlin/Float = ...): com.kborowy.colorpicker.components/HueSliderThumbConfig // com.kborowy.colorpicker.components/HueSliderThumbConfig.copy|copy(androidx.compose.ui.unit.Dp;androidx.compose.ui.graphics.Color;androidx.compose.ui.unit.Dp;kotlin.Float){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.kborowy.colorpicker.components/HueSliderThumbConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.kborowy.colorpicker.components/HueSliderThumbConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.kborowy.colorpicker.components/HueSliderThumbConfig.toString|toString(){}[0]
+
+    final object Companion { // com.kborowy.colorpicker.components/HueSliderThumbConfig.Companion|null[0]
+        final val Default // com.kborowy.colorpicker.components/HueSliderThumbConfig.Companion.Default|{}Default[0]
+            final fun <get-Default>(): com.kborowy.colorpicker.components/HueSliderThumbConfig // com.kborowy.colorpicker.components/HueSliderThumbConfig.Companion.Default.<get-Default>|<get-Default>(){}[0]
+    }
+}
+
+final class com.kborowy.colorpicker.components/PickerThumbConfig { // com.kborowy.colorpicker.components/PickerThumbConfig|null[0]
+    constructor <init>(androidx.compose.ui.unit/Dp = ..., androidx.compose.ui.graphics/Color = ...) // com.kborowy.colorpicker.components/PickerThumbConfig.<init>|<init>(androidx.compose.ui.unit.Dp;androidx.compose.ui.graphics.Color){}[0]
+
+    final val color // com.kborowy.colorpicker.components/PickerThumbConfig.color|{}color[0]
+        final fun <get-color>(): androidx.compose.ui.graphics/Color // com.kborowy.colorpicker.components/PickerThumbConfig.color.<get-color>|<get-color>(){}[0]
+    final val size // com.kborowy.colorpicker.components/PickerThumbConfig.size|{}size[0]
+        final fun <get-size>(): androidx.compose.ui.unit/Dp // com.kborowy.colorpicker.components/PickerThumbConfig.size.<get-size>|<get-size>(){}[0]
+
+    final fun component1(): androidx.compose.ui.unit/Dp // com.kborowy.colorpicker.components/PickerThumbConfig.component1|component1(){}[0]
+    final fun component2(): androidx.compose.ui.graphics/Color // com.kborowy.colorpicker.components/PickerThumbConfig.component2|component2(){}[0]
+    final fun copy(androidx.compose.ui.unit/Dp = ..., androidx.compose.ui.graphics/Color = ...): com.kborowy.colorpicker.components/PickerThumbConfig // com.kborowy.colorpicker.components/PickerThumbConfig.copy|copy(androidx.compose.ui.unit.Dp;androidx.compose.ui.graphics.Color){}[0]
+    final fun equals(kotlin/Any?): kotlin/Boolean // com.kborowy.colorpicker.components/PickerThumbConfig.equals|equals(kotlin.Any?){}[0]
+    final fun hashCode(): kotlin/Int // com.kborowy.colorpicker.components/PickerThumbConfig.hashCode|hashCode(){}[0]
+    final fun toString(): kotlin/String // com.kborowy.colorpicker.components/PickerThumbConfig.toString|toString(){}[0]
+
+    final object Companion { // com.kborowy.colorpicker.components/PickerThumbConfig.Companion|null[0]
+        final val Default // com.kborowy.colorpicker.components/PickerThumbConfig.Companion.Default|{}Default[0]
+            final fun <get-Default>(): com.kborowy.colorpicker.components/PickerThumbConfig // com.kborowy.colorpicker.components/PickerThumbConfig.Companion.Default.<get-Default>|<get-Default>(){}[0]
+    }
+}
+
+final val com.kborowy.colorpicker.components/com_kborowy_colorpicker_components_HueSliderThumbConfig$stableprop // com.kborowy.colorpicker.components/com_kborowy_colorpicker_components_HueSliderThumbConfig$stableprop|#static{}com_kborowy_colorpicker_components_HueSliderThumbConfig$stableprop[0]
+final val com.kborowy.colorpicker.components/com_kborowy_colorpicker_components_PickerThumbConfig$stableprop // com.kborowy.colorpicker.components/com_kborowy_colorpicker_components_PickerThumbConfig$stableprop|#static{}com_kborowy_colorpicker_components_PickerThumbConfig$stableprop[0]
+
+final fun (androidx.compose.ui.graphics/Color).com.kborowy.colorpicker.ext/toHex(): kotlin/String // com.kborowy.colorpicker.ext/toHex|toHex@androidx.compose.ui.graphics.Color(){}[0]
+final fun com.kborowy.colorpicker.components/com_kborowy_colorpicker_components_HueSliderThumbConfig$stableprop_getter(): kotlin/Int // com.kborowy.colorpicker.components/com_kborowy_colorpicker_components_HueSliderThumbConfig$stableprop_getter|com_kborowy_colorpicker_components_HueSliderThumbConfig$stableprop_getter(){}[0]
+final fun com.kborowy.colorpicker.components/com_kborowy_colorpicker_components_PickerThumbConfig$stableprop_getter(): kotlin/Int // com.kborowy.colorpicker.components/com_kborowy_colorpicker_components_PickerThumbConfig$stableprop_getter|com_kborowy_colorpicker_components_PickerThumbConfig$stableprop_getter(){}[0]
+final fun com.kborowy.colorpicker/KolorPicker(kotlin/Function1<androidx.compose.ui.graphics/Color, kotlin/Unit>, androidx.compose.ui/Modifier?, androidx.compose.ui.graphics/Color, com.kborowy.colorpicker.components/HueSliderThumbConfig?, com.kborowy.colorpicker.components/PickerThumbConfig?, androidx.compose.runtime/Composer?, kotlin/Int, kotlin/Int) // com.kborowy.colorpicker/KolorPicker|KolorPicker(kotlin.Function1<androidx.compose.ui.graphics.Color,kotlin.Unit>;androidx.compose.ui.Modifier?;androidx.compose.ui.graphics.Color;com.kborowy.colorpicker.components.HueSliderThumbConfig?;com.kborowy.colorpicker.components.PickerThumbConfig?;androidx.compose.runtime.Composer?;kotlin.Int;kotlin.Int){}[0]

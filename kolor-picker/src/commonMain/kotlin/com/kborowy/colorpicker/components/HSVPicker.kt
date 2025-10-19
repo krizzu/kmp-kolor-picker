@@ -57,7 +57,7 @@ internal fun HSVPicker(
         selectorPosition =
             Offset(
                 x = newOffset.x.coerceIn(0f, rectSize.width.toFloat() - thumbSizePx / 2),
-                y = newOffset.y.coerceIn(0f, rectSize.height.toFloat() - thumbSizePx / 2)
+                y = newOffset.y.coerceIn(0f, rectSize.height.toFloat() - thumbSizePx / 2),
             )
     }
 
@@ -99,7 +99,7 @@ internal fun HSVPicker(
             color = thumbConfig.color,
             style = Stroke(width = thumbSizePx / 2f),
             center = selectorPosition,
-            radius = thumbSizePx
+            radius = thumbSizePx,
         )
     }
 }
