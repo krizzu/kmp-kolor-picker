@@ -111,10 +111,10 @@ internal fun HueSlider(
                     size =
                         Size(
                             width = sliderSize.width - (thumbConfig.borderSize.toPx()),
-                            height = thumbHeightPx
+                            height = thumbHeightPx,
                         ),
                     style = Stroke(width = thumbConfig.borderSize.toPx()),
-                    cornerRadius = CornerRadius(thumbConfig.borderRadius, thumbConfig.borderRadius)
+                    cornerRadius = CornerRadius(thumbConfig.borderRadius, thumbConfig.borderRadius),
                 )
             }
         }

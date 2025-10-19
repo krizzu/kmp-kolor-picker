@@ -37,7 +37,7 @@ fun KolorPicker(
     modifier: Modifier = Modifier,
     initialColor: Color = Color.Red,
     hueSliderConfig: HueSliderThumbConfig = HueSliderThumbConfig.Default,
-    pickerThumbConfig: PickerThumbConfig = PickerThumbConfig.Default
+    pickerThumbConfig: PickerThumbConfig = PickerThumbConfig.Default,
 ) {
     var selectedHue by remember { mutableStateOf(initialColor) }
 
@@ -55,7 +55,7 @@ fun KolorPicker(
             initialColor = initialColor,
             onColorSelected = { selectedHue = it },
             thumbConfig = hueSliderConfig,
-            modifier = Modifier.weight(1f)
+            modifier = Modifier.weight(1f),
         )
     }
 }
