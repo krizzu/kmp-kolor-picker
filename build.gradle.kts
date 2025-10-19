@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.publish) apply false
     alias(libs.plugins.spotless)
-    alias(libs.plugins.validator.abi) apply false
+    // alias(libs.plugins.validator.abi) apply false
 }
 
 spotless {

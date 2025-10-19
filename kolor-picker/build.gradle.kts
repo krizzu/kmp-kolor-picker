@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.publish)
-    alias(libs.plugins.validator.abi)
 }
 
 kotlin {
@@ -26,6 +25,9 @@ kotlin {
             implementation(compose.ui)
         }
     }
+
+    @OptIn(org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation::class)
+    abiValidation { enabled.set(true) }
 }
 
 android {
