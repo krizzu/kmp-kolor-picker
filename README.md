@@ -37,7 +37,7 @@ dependencies {
 }
 ```
 
-## 🧑‍💻 Usage
+## Usage
 
 ```kotlin
 
@@ -49,7 +49,7 @@ KolorPicker(
 
 ```
 
-## 🛠️ API Parameters
+## API Parameters
 
 ### `KolorPicker` Composable
 | Parameter           | Type                   | Default      | Description                                       |
