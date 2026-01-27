@@ -1,4 +1,4 @@
-# 🎨 Kolor Picker
+# 🎨 KMP Kolor Picker
 
 A customizable color picker component for Compose Multiplatform with hue slider and 2D color selection.
 
@@ -37,7 +37,7 @@ dependencies {
 }
 ```
 
-## 🧑‍💻 Usage
+## Usage
 
 ```kotlin
 
@@ -49,7 +49,7 @@ KolorPicker(
 
 ```
 
-## 🛠️ API Parameters
+## API Parameters
 
 ### `KolorPicker` Composable
 | Parameter           | Type                   | Default      | Description                                       |
