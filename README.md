@@ -1,4 +1,4 @@
-# 🎨 Kolor Picker
+# 🎨 KMP Kolor Picker
 
 A customizable color picker component for Compose Multiplatform with hue slider and 2D color selection.
 
