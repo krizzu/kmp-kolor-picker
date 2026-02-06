@@ -21,6 +21,7 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -35,11 +36,19 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
 import com.kborowy.colorpicker.ext.fromHsv
 import com.kborowy.colorpicker.ext.toHsv
 import com.kborowy.colorpicker.ext.toHueDegree
+
+@Immutable
+data class PickerThumbConfig(val size: Dp = 8.dp, val color: Color = Color.White) {
+    companion object {
+        val Default = PickerThumbConfig()
+    }
+}
 
 @Composable
 internal fun HSVPicker(

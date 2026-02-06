@@ -26,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import com.kborowy.colorpicker.components.AlphaSlider
 import com.kborowy.colorpicker.components.HSVPicker
 import com.kborowy.colorpicker.components.HueSlider
 import com.kborowy.colorpicker.components.HueSliderThumbConfig
@@ -52,9 +53,17 @@ fun KolorPicker(
         Spacer(modifier = Modifier.width(8.dp))
 
         HueSlider(
-            initialColor = initialColor,
+            initialColor = initialColor.copy(alpha = 1f),
             onColorSelected = { selectedHue = it },
             thumbConfig = hueSliderConfig,
+            modifier = Modifier.weight(1f),
+        )
+
+        Spacer(modifier = Modifier.width(4.dp))
+
+        AlphaSlider(
+            color = initialColor,
+            onColorSelected = onColorSelected,
             modifier = Modifier.weight(1f),
         )
     }

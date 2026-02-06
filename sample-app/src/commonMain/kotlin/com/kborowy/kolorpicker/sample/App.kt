@@ -53,7 +53,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun App() {
-    var selectedColor by remember { mutableStateOf(Color(red = 120, green = 194, blue = 87)) }
+    var selectedColor by remember {
+        mutableStateOf(Color(red = 120, green = 194, blue = 87, alpha = 255))
+    }
     var visible by remember { mutableStateOf(true) }
 
     MaterialTheme {
@@ -77,6 +79,10 @@ fun App() {
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text("#${selectedColor.toHex()}", color = Color.White)
+                    Text(
+                        "alpha: ${selectedColor.alphaFormatted}",
+                        color = Color.White,
+                    )
                     Box(modifier = Modifier.size(100.dp).background(selectedColor))
                 }
             }
@@ -91,8 +97,8 @@ fun App() {
                         Modifier.width(350.dp)
                             .height(300.dp)
                             .clip(RoundedCornerShape(16.dp))
-                            .padding(10.dp),
-                    hueSliderConfig = HueSliderThumbConfig(color = Color.Cyan),
+                            .padding(4.dp),
+                    hueSliderConfig = HueSliderThumbConfig.Default.copy(color = Color.Cyan),
                     pickerThumbConfig = PickerThumbConfig(color = Color.DarkGray),
                 )
             }
@@ -109,3 +115,12 @@ private fun Color.Companion.random(): Color =
         green = Random.nextInt(0..255),
         blue = Random.nextInt(0..255),
     )
+
+private val Color.alphaFormatted: String
+    get() {
+        val number = alpha.toString().split(".")
+        if (number[1].isEmpty()) {
+            return "${number.first()}.00}"
+        }
+        return "${number.first()}.${number[1].take(2)}"
+    }
