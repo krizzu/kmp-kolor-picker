@@ -73,18 +73,17 @@ internal fun HueSlider(
     val thumbHeightPx = with(LocalDensity.current) { thumbConfig.height.toPx() }
     val updateColor by rememberUpdatedState(onColorSelected)
 
-    fun onThumbPositionChange(newOffset: Offset) {
-        val start = thumbHeightPx / 2
-        val end = sliderSize.height - thumbHeightPx / 2
-        val y = newOffset.y.coerceIn(start..end)
-        val newPosition = y - start
+    fun onThumbPositionChange(position: Offset) {
+        val thumbCenter = thumbHeightPx / 2
+        val y = position.y.coerceIn(thumbCenter, sliderSize.height - thumbCenter)
+        val coercedY = y - thumbCenter
 
         // calculate hue value based on new position value
         val hueDegreeAtPosition =
-            (newPosition / (sliderSize.height - thumbHeightPx) * 360f).coerceIn(0f, 360f)
+            (coercedY / (sliderSize.height - thumbHeightPx) * 360f).coerceIn(0f, 360f)
         val newColor = hueDegreeToColor(hueDegreeAtPosition)
 
-        thumbPositionY = newPosition
+        thumbPositionY = coercedY
         updateColor(newColor)
     }
 
