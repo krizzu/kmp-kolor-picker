@@ -23,6 +23,7 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import com.kborowy.colorpicker.ext.toHex
 
 @Immutable
 data class AlphaSliderThumbConfig(
@@ -65,16 +67,29 @@ internal fun AlphaSlider(
         return (1f - positionY / (sliderSize.height - thumbHeightPx)).coerceIn(0f, 1f)
     }
 
+    fun alphaToPosition(alpha: Float): Float {
+        if (sliderSize.isEmpty()) {
+            return 0f
+        }
+
+        return (1f - alpha) * (sliderSize.height - thumbHeightPx)
+    }
+
     fun onThumbPositionChange(position: Offset) {
-        val y = position.y.coerceIn(thumbHeightPx / 2, sliderSize.height - thumbHeightPx / 2)
-        val relativeY = y - thumbHeightPx / 2
+        val thumbCenter = thumbHeightPx / 2
+        val y = position.y.coerceIn(thumbCenter, sliderSize.height - thumbCenter)
+        val relativeY = y - thumbCenter
         thumbPositionY = relativeY
         onColorSelected(color.copy(alpha = positionToAlphaValue(relativeY)))
     }
 
-    LaunchedEffect(sliderSize, color) {
+    LaunchedEffect(sliderSize, color.toHex()) {
         if (sliderSize.isEmpty()) {
             return@LaunchedEffect
+        }
+        val newPosition = alphaToPosition(color.alpha)
+        if (thumbPositionY != newPosition) {
+            thumbPositionY = newPosition
         }
     }
 
@@ -119,7 +134,12 @@ internal fun AlphaSlider(
                     .padding(horizontal = config.borderRadius)
                     .clip(RoundedCornerShape(config.borderRadius))
         ) {
-            drawRect(brush = Brush.verticalGradient(colors = listOf(color, color.copy(alpha = 0f))))
+            drawRect(
+                brush =
+                    Brush.verticalGradient(
+                        colors = listOf(color.copy(alpha = 1f), color.copy(alpha = 0f))
+                    )
+            )
         }
 
         if (!sliderSize.isEmpty()) {
