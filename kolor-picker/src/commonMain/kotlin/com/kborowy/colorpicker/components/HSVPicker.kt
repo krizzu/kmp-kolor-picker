@@ -19,7 +19,6 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
@@ -28,10 +27,10 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
@@ -44,7 +43,11 @@ import com.kborowy.colorpicker.ext.toHsv
 import com.kborowy.colorpicker.ext.toHueDegree
 
 @Immutable
-data class PickerThumbConfig(val size: Dp = 8.dp, val color: Color = Color.White) {
+data class PickerThumbConfig(
+    val size: Dp = 16.dp,
+    val strokeWidth: Float = 4f,
+    val color: Color = Color.White,
+) {
     companion object {
         val Default = PickerThumbConfig()
     }
@@ -61,13 +64,14 @@ internal fun HSVPicker(
     var rectSize by remember { mutableStateOf(IntSize.Zero) }
     var selectorPosition by remember { mutableStateOf(Offset.Zero) }
     val thumbSizePx = with(LocalDensity.current) { thumbConfig.size.toPx() }
+    val strokeSizePx = thumbConfig.strokeWidth
+    val thumbRadius = thumbSizePx / 2f
+    val thumbEdge = thumbRadius + strokeSizePx / 2f
 
     fun updatePosition(newOffset: Offset) {
-        selectorPosition =
-            Offset(
-                x = newOffset.x.coerceIn(0f, rectSize.width.toFloat() - thumbSizePx / 2),
-                y = newOffset.y.coerceIn(0f, rectSize.height.toFloat() - thumbSizePx / 2),
-            )
+        val x = newOffset.x.coerceIn(thumbEdge, rectSize.width.toFloat() - thumbEdge)
+        val y = newOffset.y.coerceIn(thumbEdge, rectSize.height.toFloat() - thumbEdge)
+        selectorPosition = Offset(x, y)
     }
 
     LaunchedEffect(rectSize, selectorPosition, selectedColor) {
@@ -75,9 +79,11 @@ internal fun HSVPicker(
             return@LaunchedEffect
         }
         val hue = selectedColor.toHueDegree()
-        val saturation = selectorPosition.x / (rectSize.width - thumbSizePx / 2)
-        val value = 1f - selectorPosition.y / (rectSize.height - thumbSizePx / 2)
-        val color = Color.fromHsv(hue, saturation, value)
+        val travelWidth = (rectSize.width - 2 * thumbEdge).coerceAtLeast(1f)
+        val travelHeight = (rectSize.height - 2 * thumbEdge).coerceAtLeast(1f)
+        val saturation = (selectorPosition.x - thumbEdge) / travelWidth
+        val value = 1f - (selectorPosition.y - thumbEdge) / travelHeight
+        val color = Color.fromHsv(hue, saturation.coerceIn(0f, 1f), value.coerceIn(0f, 1f))
         onColorSelected(color)
     }
 
@@ -86,8 +92,10 @@ internal fun HSVPicker(
             return@LaunchedEffect
         }
         val (_, saturation, value) = initialSelectedHue.toHsv()
-        val x = saturation * (rectSize.width - thumbSizePx / 2)
-        val y = (1f - value) * (rectSize.height - thumbSizePx / 2)
+        val travelWidth = (rectSize.width - 2 * thumbEdge).coerceAtLeast(1f)
+        val travelHeight = (rectSize.height - 2 * thumbEdge).coerceAtLeast(1f)
+        val x = saturation * travelWidth + thumbEdge
+        val y = (1f - value) * travelHeight + thumbEdge
         selectorPosition = Offset(x, y)
     }
 
@@ -95,7 +103,6 @@ internal fun HSVPicker(
         modifier =
             modifier
                 .fillMaxSize()
-                .clip(RoundedCornerShape(4.dp))
                 .onSizeChanged { rectSize = it }
                 .pointerInput(Unit) { detectTapGestures { updatePosition(it) } }
                 .pointerInput(Unit) {
@@ -106,9 +113,9 @@ internal fun HSVPicker(
         drawRect(Brush.verticalGradient(listOf(Color.Transparent, Color.Black)))
         drawCircle(
             color = thumbConfig.color,
-            style = Stroke(width = thumbSizePx / 2f),
+            style = Stroke(width = strokeSizePx, cap = StrokeCap.Round),
             center = selectorPosition,
-            radius = thumbSizePx,
+            radius = thumbRadius,
         )
     }
 }
