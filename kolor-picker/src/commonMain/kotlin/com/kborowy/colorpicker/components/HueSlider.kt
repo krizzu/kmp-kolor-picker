@@ -62,12 +62,12 @@ data class HueSliderThumbConfig(
 
 @Composable
 internal fun HueSlider(
+    color: Color,
     onColorSelected: (Color) -> Unit,
     modifier: Modifier = Modifier,
-    initialColor: Color? = null,
     thumbConfig: HueSliderThumbConfig = HueSliderThumbConfig.Default,
 ) {
-    val initialSelectedHue = remember { initialColor }
+    val initialSelectedHue = remember { color }
     var sliderSize by remember { mutableStateOf(Size.Zero) }
     var thumbPositionY by remember { mutableStateOf(0f) }
     val thumbHeightPx = with(LocalDensity.current) { thumbConfig.height.toPx() }
@@ -88,7 +88,7 @@ internal fun HueSlider(
     }
 
     LaunchedEffect(sliderSize, initialSelectedHue) {
-        if (!sliderSize.isEmpty() && initialSelectedHue != null) {
+        if (!sliderSize.isEmpty()) {
             val deg = initialSelectedHue.toHueDegree()
             thumbPositionY = (deg / 360f) * (sliderSize.height - thumbHeightPx)
         }

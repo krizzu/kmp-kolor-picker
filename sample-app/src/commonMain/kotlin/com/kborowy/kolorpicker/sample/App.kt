@@ -70,8 +70,8 @@ fun App() {
                 Column {
                     Button(onClick = { visible = !visible }) { Text("Toggle visibility") }
 
-                    Button(enabled = !visible, onClick = { selectedColor = Color.random() }) {
-                        Text("Random initial")
+                    Button(onClick = { selectedColor = Color.random() }) {
+                        Text("Randomize color")
                     }
                 }
 
@@ -91,7 +91,7 @@ fun App() {
 
             if (visible) {
                 KolorPicker(
-                    initialColor = selectedColor,
+                    color = selectedColor,
                     onColorSelected = { selectedColor = it },
                     modifier =
                         Modifier.width(350.dp)

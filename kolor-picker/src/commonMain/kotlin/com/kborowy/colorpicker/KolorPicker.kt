@@ -32,20 +32,28 @@ import com.kborowy.colorpicker.components.HueSlider
 import com.kborowy.colorpicker.components.HueSliderThumbConfig
 import com.kborowy.colorpicker.components.PickerThumbConfig
 
+/**
+ * v2 todo:
+ * - make this component being controlled by parent color state
+ *     - no internal state
+ *     - sliders and picker need to react to changing color property
+ * - Add other default slider configs (full circle?)
+ * - Unify picker configs (have single data class)
+ */
 @Composable
 fun KolorPicker(
+    color: Color,
     onColorSelected: (Color) -> Unit,
     modifier: Modifier = Modifier,
-    initialColor: Color = Color.Red,
     hueSliderConfig: HueSliderThumbConfig = HueSliderThumbConfig.Default,
     pickerThumbConfig: PickerThumbConfig = PickerThumbConfig.Default,
 ) {
-    var selectedHue by remember { mutableStateOf(initialColor) }
+    var selectedHue by remember { mutableStateOf(color) }
 
     Row(modifier = modifier) {
         HSVPicker(
             selectedColor = selectedHue,
-            onColorSelected = onColorSelected,
+            onColorSelected = { onColorSelected(it.copy(alpha = color.alpha)) },
             thumbConfig = pickerThumbConfig,
             modifier = Modifier.weight(9f),
         )
@@ -53,8 +61,8 @@ fun KolorPicker(
         Spacer(modifier = Modifier.width(8.dp))
 
         HueSlider(
-            initialColor = initialColor.copy(alpha = 1f),
-            onColorSelected = { selectedHue = it },
+            color = color.copy(alpha = 1f),
+            onColorSelected = { selectedHue = it.copy(alpha = color.alpha) },
             thumbConfig = hueSliderConfig,
             modifier = Modifier.weight(1f),
         )
@@ -62,7 +70,7 @@ fun KolorPicker(
         Spacer(modifier = Modifier.width(4.dp))
 
         AlphaSlider(
-            color = initialColor,
+            color = color,
             onColorSelected = onColorSelected,
             modifier = Modifier.weight(1f),
         )
