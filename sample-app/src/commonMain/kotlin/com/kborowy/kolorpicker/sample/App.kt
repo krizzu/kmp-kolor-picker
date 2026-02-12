@@ -70,19 +70,14 @@ fun App() {
                 Column {
                     Button(onClick = { visible = !visible }) { Text("Toggle visibility") }
 
-                    Button(onClick = { selectedColor = Color.random() }) {
-                        Text("Randomize color")
-                    }
+                    Button(enabled = !visible, onClick = { selectedColor = Color.random() }) { Text("Randomize color") }
                 }
 
                 Spacer(modifier = Modifier.width(10.dp))
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text("#${selectedColor.toHex()}", color = Color.White)
-                    Text(
-                        "alpha: ${selectedColor.alphaFormatted}",
-                        color = Color.White,
-                    )
+                    Text("alpha: ${selectedColor.alphaFormatted}", color = Color.White)
                     Box(modifier = Modifier.size(100.dp).background(selectedColor))
                 }
             }

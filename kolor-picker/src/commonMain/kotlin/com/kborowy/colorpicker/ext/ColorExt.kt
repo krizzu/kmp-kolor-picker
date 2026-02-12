@@ -72,9 +72,9 @@ internal fun Color.toHsv(): Triple<Float, Float, Float> {
     val hue =
         when {
             chroma == 0f -> 0f
-            max == red -> 60f * ((green - blue) / chroma + 0f)
-            max == green -> 60f * ((blue - red) / chroma + 120f)
-            else -> 60f * ((red - green) / chroma + 240f)
+            max == red -> 60f * ((green - blue) / chroma)
+            max == green -> 60f * ((blue - red) / chroma + 2f)
+            else -> 60f * ((red - green) / chroma + 4f)
         }.let { (it + 360) % 360 }
     val saturation = if (max == 0f) 0f else chroma / max
     val value = max

@@ -87,7 +87,7 @@ internal fun BrightnessPicker(
             return@LaunchedEffect
         }
 
-        selectorPosition = colorToPosition(color, rectSize, thumbEdge)
+        selectorPosition = colorToPosition(initialSelectedHue, rectSize, thumbEdge)
     }
 
     Canvas(
