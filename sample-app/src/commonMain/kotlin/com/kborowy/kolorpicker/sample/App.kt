@@ -91,7 +91,7 @@ fun App() {
 
             if (visible) {
                 KolorPicker(
-                    color = selectedColor,
+                    initialColor = selectedColor,
                     onColorSelected = { selectedColor = it },
                     modifier =
                         Modifier.width(350.dp)

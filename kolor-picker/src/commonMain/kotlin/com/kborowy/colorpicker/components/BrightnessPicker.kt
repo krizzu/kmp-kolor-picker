@@ -54,13 +54,13 @@ data class PickerThumbConfig(
 }
 
 @Composable
-internal fun HSVPicker(
-    selectedColor: Color,
+internal fun BrightnessPicker(
+    color: Color,
     onColorSelected: (Color) -> Unit,
     modifier: Modifier = Modifier,
     thumbConfig: PickerThumbConfig = PickerThumbConfig.Default,
 ) {
-    val initialSelectedHue = remember { selectedColor }
+    val initialSelectedHue = remember { color }
     var rectSize by remember { mutableStateOf(IntSize.Zero) }
     var selectorPosition by remember { mutableStateOf(Offset.Zero) }
     val thumbSizePx = with(LocalDensity.current) { thumbConfig.size.toPx() }
@@ -74,11 +74,11 @@ internal fun HSVPicker(
         selectorPosition = Offset(x, y)
     }
 
-    LaunchedEffect(rectSize, selectorPosition, selectedColor) {
+    LaunchedEffect(rectSize, selectorPosition, color) {
         if (rectSize == IntSize.Zero || selectorPosition == Offset.Zero) {
             return@LaunchedEffect
         }
-        val hue = selectedColor.toHueDegree()
+        val hue = color.toHueDegree()
         val travelWidth = (rectSize.width - 2 * thumbEdge).coerceAtLeast(1f)
         val travelHeight = (rectSize.height - 2 * thumbEdge).coerceAtLeast(1f)
         val saturation = (selectorPosition.x - thumbEdge) / travelWidth
@@ -109,7 +109,7 @@ internal fun HSVPicker(
                     detectDragGestures { change, _ -> updatePosition(change.position) }
                 }
     ) {
-        drawRect(Brush.horizontalGradient(listOf(Color.White, selectedColor)))
+        drawRect(Brush.horizontalGradient(listOf(Color.White, color)))
         drawRect(Brush.verticalGradient(listOf(Color.Transparent, Color.Black)))
         drawCircle(
             color = thumbConfig.color,
