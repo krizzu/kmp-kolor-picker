@@ -78,25 +78,16 @@ internal fun BrightnessPicker(
         if (rectSize == IntSize.Zero || selectorPosition == Offset.Zero) {
             return@LaunchedEffect
         }
-        val hue = color.toHueDegree()
-        val travelWidth = (rectSize.width - 2 * thumbEdge).coerceAtLeast(1f)
-        val travelHeight = (rectSize.height - 2 * thumbEdge).coerceAtLeast(1f)
-        val saturation = (selectorPosition.x - thumbEdge) / travelWidth
-        val value = 1f - (selectorPosition.y - thumbEdge) / travelHeight
-        val color = Color.fromHsv(hue, saturation.coerceIn(0f, 1f), value.coerceIn(0f, 1f))
-        onColorSelected(color)
+        val newColor = positionToColor(color, rectSize, selectorPosition, thumbEdge)
+        onColorSelected(newColor)
     }
 
     LaunchedEffect(rectSize, initialSelectedHue) {
         if (rectSize == IntSize.Zero) {
             return@LaunchedEffect
         }
-        val (_, saturation, value) = initialSelectedHue.toHsv()
-        val travelWidth = (rectSize.width - 2 * thumbEdge).coerceAtLeast(1f)
-        val travelHeight = (rectSize.height - 2 * thumbEdge).coerceAtLeast(1f)
-        val x = saturation * travelWidth + thumbEdge
-        val y = (1f - value) * travelHeight + thumbEdge
-        selectorPosition = Offset(x, y)
+
+        selectorPosition = colorToPosition(color, rectSize, thumbEdge)
     }
 
     Canvas(
@@ -118,4 +109,22 @@ internal fun BrightnessPicker(
             radius = thumbRadius,
         )
     }
+}
+
+fun colorToPosition(c: Color, size: IntSize, edge: Float): Offset {
+    val (_, saturation, value) = c.toHsv()
+    val travelWidth = (size.width - 2 * edge).coerceAtLeast(1f)
+    val travelHeight = (size.height - 2 * edge).coerceAtLeast(1f)
+    val x = saturation * travelWidth + edge
+    val y = (1f - value) * travelHeight + edge
+    return Offset(x, y)
+}
+
+private fun positionToColor(color: Color, size: IntSize, position: Offset, edge: Float): Color {
+    val hue = color.toHueDegree()
+    val travelWidth = (size.width - 2 * edge).coerceAtLeast(1f)
+    val travelHeight = (size.height - 2 * edge).coerceAtLeast(1f)
+    val saturation = (position.x - edge) / travelWidth
+    val value = 1f - (position.y - edge) / travelHeight
+    return Color.fromHsv(hue, saturation.coerceIn(0f, 1f), value.coerceIn(0f, 1f))
 }
