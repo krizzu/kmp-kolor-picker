@@ -61,7 +61,7 @@ fun KolorPicker(
         HueSlider(
             color = selectedHue,
             onColorSelected = { selectedHue = it },
-            config = SliderConfig.Default,
+            config = SliderConfig.Circle,
             modifier = Modifier.weight(1f),
         )
 

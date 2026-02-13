@@ -30,7 +30,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
@@ -45,7 +44,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.kborowy.colorpicker.ext.colorList
@@ -110,33 +108,20 @@ internal fun HueSlider(
                 }
     ) {
         // color track
-        //
-        Box(
-            contentAlignment = Alignment.CenterStart,
-            modifier =
-                Modifier.fillMaxSize()
-                    .padding(
-                        horizontal =
-                            (config.sliderPaddingRadius - config.thumbBorderSize).coerceAtLeast(
-                                0.dp
-                            )
-                    )
-                    .clip(RoundedCornerShape(size = config.sliderBorderRadius))
+        Canvas(
+            Modifier.fillMaxSize()
+                .padding(horizontal = config.sliderPadding)
+                .clip(RoundedCornerShape(size = config.sliderBorderRadius))
         ) {
-            Canvas(
-                modifier = Modifier.fillMaxSize()
-            ) {
-                drawRect(Brush.verticalGradient(Color.colorList))
-            }
+            drawRect(Brush.verticalGradient(Color.colorList))
         }
 
         // draw thumb only when we know the size
         if (!sliderSize.isEmpty()) {
-            Canvas(
-                modifier = Modifier.fillMaxSize()
-            ) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
                 val strokeWidth = config.thumbBorderSize.toPx()
-                val thumbWidth = sliderSize.width - (2 * config.sliderPaddingRadius.toPx()) + strokeWidth
+                val thumbPaddingPx = config.thumbHorizontalPadding.toPx()
+                val thumbWidth = sliderSize.width - (2 * thumbPaddingPx) + strokeWidth
                 val thumbX = (size.width - thumbWidth) / 2
 
                 drawRoundRect(
