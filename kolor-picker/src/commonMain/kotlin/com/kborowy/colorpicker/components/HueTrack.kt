@@ -36,14 +36,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Fill
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
@@ -125,25 +121,14 @@ internal fun HueTrack(
             drawRect(Brush.verticalGradient(Color.colorList))
         }
 
-        // draw thumb only when we know the size
         if (!trackSize.isEmpty()) {
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                val strokeWidth = config.thumbBorderSize.toPx()
-                val thumbWidth =
-                    if (config.thumbSize.width == 0.dp) trackSize.width + strokeWidth
-                    else config.thumbSize.width.toPx()
-                val thumbX = (size.width - thumbWidth) / 2
-
-                drawRoundRect(
-                    color = config.thumbColor,
-                    topLeft = Offset(x = thumbX, y = thumbPositionY),
-                    size = Size(width = thumbWidth, height = thumbHeightPx),
-                    style =
-                        if (strokeWidth <= 0f) Fill
-                        else Stroke(width = strokeWidth, cap = StrokeCap.Round),
-                    cornerRadius = CornerRadius(x = config.thumbBorderRadius.toPx()),
-                )
-            }
+            ThumbCanvas(
+                modifier = Modifier.fillMaxSize(),
+                config = config,
+                trackWidth = trackSize.width,
+                height = thumbHeightPx,
+                positionY = thumbPositionY,
+            )
         }
     }
 }

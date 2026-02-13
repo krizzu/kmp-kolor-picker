@@ -19,14 +19,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.StrokeCap
-import androidx.compose.ui.graphics.drawscope.Fill
-import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
@@ -41,39 +37,39 @@ internal fun AlphaTrack(
     modifier: Modifier = Modifier,
     config: TrackConfig,
 ) {
-    var sliderSize by remember { mutableStateOf(Size.Zero) }
+    var trackSize by remember { mutableStateOf(Size.Zero) }
     val innerPadding = with(LocalDensity.current) { config.trackPadding.roundToPx() }
-    val checkerSize = sliderSize.width / 2 - innerPadding
-    val rows = (sliderSize.height / checkerSize).toInt() + 1
+    val checkerSize = trackSize.width / 2 - innerPadding
+    val rows = (trackSize.height / checkerSize).toInt() + 1
     val thumbHeightPx = with(LocalDensity.current) { config.thumbSize.height.toPx() }
     var thumbPositionY by remember { mutableStateOf(0f) }
 
     fun positionToAlphaValue(positionY: Float): Float {
-        if (sliderSize.isEmpty()) {
+        if (trackSize.isEmpty()) {
             return 0f
         }
 
-        return (1f - positionY / (sliderSize.height - thumbHeightPx)).coerceIn(0f, 1f)
+        return (1f - positionY / (trackSize.height - thumbHeightPx)).coerceIn(0f, 1f)
     }
 
     fun alphaToPosition(alpha: Float): Float {
-        if (sliderSize.isEmpty()) {
+        if (trackSize.isEmpty()) {
             return 0f
         }
 
-        return (1f - alpha) * (sliderSize.height - thumbHeightPx)
+        return (1f - alpha) * (trackSize.height - thumbHeightPx)
     }
 
     fun onThumbPositionChange(position: Offset) {
         val thumbCenter = thumbHeightPx / 2
-        val y = position.y.coerceIn(thumbCenter, sliderSize.height - thumbCenter)
+        val y = position.y.coerceIn(thumbCenter, trackSize.height - thumbCenter)
         val coercedY = y - thumbCenter
         thumbPositionY = coercedY
         onColorSelected(color.copy(alpha = positionToAlphaValue(coercedY)))
     }
 
-    LaunchedEffect(sliderSize, color.toHex()) {
-        if (sliderSize.isEmpty()) {
+    LaunchedEffect(trackSize, color.toHex()) {
+        if (trackSize.isEmpty()) {
             return@LaunchedEffect
         }
         val newPosition = alphaToPosition(color.alpha)
@@ -86,7 +82,7 @@ internal fun AlphaTrack(
         modifier =
             modifier
                 .fillMaxHeight()
-                .onSizeChanged { sliderSize = it.toSize() }
+                .onSizeChanged { trackSize = it.toSize() }
                 .pointerInput(Unit) { detectTapGestures(onTap = ::onThumbPositionChange) }
                 .pointerInput(Unit) {
                     detectDragGestures { change, _ -> onThumbPositionChange(change.position) }
@@ -120,7 +116,7 @@ internal fun AlphaTrack(
             }
         }
 
-        // draw slider with color with applied alpha channel
+        // draw track with color with applied alpha channel
         Canvas(
             trackModifier
                 .align(Alignment.Center)
@@ -135,25 +131,14 @@ internal fun AlphaTrack(
             )
         }
 
-        // draw thumb only when we know the size
-        if (!sliderSize.isEmpty()) {
-            Canvas(modifier = Modifier.fillMaxSize()) {
-                val strokeWidth = config.thumbBorderSize.toPx()
-                val thumbWidth =
-                    if (config.thumbSize.width == 0.dp) sliderSize.width + strokeWidth
-                    else config.thumbSize.width.toPx()
-                val thumbX = (size.width - thumbWidth) / 2
-
-                drawRoundRect(
-                    color = config.thumbColor,
-                    topLeft = Offset(x = thumbX, y = thumbPositionY),
-                    size = Size(width = thumbWidth, height = thumbHeightPx),
-                    style =
-                        if (strokeWidth <= 0f) Fill
-                        else Stroke(width = strokeWidth, cap = StrokeCap.Round),
-                    cornerRadius = CornerRadius(x = config.thumbBorderRadius.toPx()),
-                )
-            }
+        if (!trackSize.isEmpty()) {
+            ThumbCanvas(
+                modifier = Modifier.fillMaxSize(),
+                config = config,
+                trackWidth = trackSize.width,
+                height = thumbHeightPx,
+                positionY = thumbPositionY,
+            )
         }
     }
 }
