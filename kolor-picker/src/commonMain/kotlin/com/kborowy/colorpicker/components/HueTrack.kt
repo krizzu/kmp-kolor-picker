@@ -19,8 +19,11 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Immutable
@@ -30,6 +33,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
@@ -63,25 +67,25 @@ data class HueSliderThumbConfig(
 }
 
 @Composable
-internal fun HueSlider(
+internal fun HueTrack(
     color: Color,
     onColorSelected: (Color) -> Unit,
-    config: SliderConfig,
+    config: TrackConfig,
     modifier: Modifier = Modifier,
 ) {
-    var sliderSize by remember { mutableStateOf(Size.Zero) }
+    var trackSize by remember { mutableStateOf(Size.Zero) }
     var thumbPositionY by remember { mutableStateOf(0f) }
     val thumbHeightPx = with(LocalDensity.current) { config.thumbSize.height.toPx() }
     val updateColor by rememberUpdatedState(onColorSelected)
 
     fun onThumbPositionChange(position: Offset) {
         val thumbCenter = thumbHeightPx / 2
-        val y = position.y.coerceIn(thumbCenter, sliderSize.height - thumbCenter)
+        val y = position.y.coerceIn(thumbCenter, trackSize.height - thumbCenter)
         val coercedY = y - thumbCenter
 
         // calculate hue value based on new position value
         val hueDegreeAtPosition =
-            (coercedY / (sliderSize.height - thumbHeightPx) * 360f).coerceIn(0f, 360f)
+            (coercedY / (trackSize.height - thumbHeightPx) * 360f).coerceIn(0f, 360f)
         val newColor = hueDegreeToColor(hueDegreeAtPosition)
 
         thumbPositionY = coercedY
@@ -90,10 +94,10 @@ internal fun HueSlider(
         }
     }
 
-    LaunchedEffect(sliderSize, color) {
-        if (!sliderSize.isEmpty()) {
+    LaunchedEffect(trackSize, color) {
+        if (!trackSize.isEmpty()) {
             val deg = color.toHueDegree()
-            thumbPositionY = (deg / 360f) * (sliderSize.height - thumbHeightPx)
+            thumbPositionY = (deg / 360f) * (trackSize.height - thumbHeightPx)
         }
     }
 
@@ -101,27 +105,32 @@ internal fun HueSlider(
         modifier =
             modifier
                 .fillMaxSize()
-                .onSizeChanged { sliderSize = it.toSize() }
+                .onSizeChanged { trackSize = it.toSize() }
                 .pointerInput(Unit) { detectTapGestures(onTap = ::onThumbPositionChange) }
                 .pointerInput(Unit) {
                     detectDragGestures { change, _ -> onThumbPositionChange(change.position) }
                 }
     ) {
         // color track
+        var trackModifier = Modifier.fillMaxSize()
+        if (config.trackWidth != 0.dp) {
+            trackModifier = trackModifier.wrapContentSize().fillMaxHeight().size(config.trackWidth)
+        }
         Canvas(
-            Modifier.fillMaxSize()
-                .padding(horizontal = config.sliderPadding)
-                .clip(RoundedCornerShape(size = config.sliderBorderRadius))
+            trackModifier
+                .align(Alignment.Center)
+                .padding(horizontal = config.trackPadding)
+                .clip(RoundedCornerShape(size = config.trackBorderRadius))
         ) {
             drawRect(Brush.verticalGradient(Color.colorList))
         }
 
         // draw thumb only when we know the size
-        if (!sliderSize.isEmpty()) {
+        if (!trackSize.isEmpty()) {
             Canvas(modifier = Modifier.fillMaxSize()) {
                 val strokeWidth = config.thumbBorderSize.toPx()
                 val thumbWidth =
-                    if (config.thumbSize.width == 0.dp) sliderSize.width + strokeWidth
+                    if (config.thumbSize.width == 0.dp) trackSize.width + strokeWidth
                     else config.thumbSize.width.toPx()
                 val thumbX = (size.width - thumbWidth) / 2
 
