@@ -7,14 +7,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
@@ -22,40 +24,28 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.kborowy.colorpicker.ext.toHex
 
-@Immutable
-data class AlphaSliderThumbConfig(
-    val size: DpSize = DpSize(4.dp, height = 12.dp),
-    val color: Color = Color.White,
-    val borderSize: Dp = 4.dp,
-    val borderRadius: Dp = 6.dp,
-) {
-    companion object {
-        val Default = AlphaSliderThumbConfig()
-    }
-}
-
 @Composable
-internal fun AlphaSlider(
+internal fun AlphaTrack(
     color: Color,
     onColorSelected: (Color) -> Unit,
     modifier: Modifier = Modifier,
-    config: AlphaSliderThumbConfig = AlphaSliderThumbConfig.Default,
+    config: TrackConfig,
 ) {
     var sliderSize by remember { mutableStateOf(Size.Zero) }
-    val innerPadding = with(LocalDensity.current) { config.borderRadius.roundToPx() }
+    val innerPadding = with(LocalDensity.current) { config.trackPadding.roundToPx() }
     val checkerSize = sliderSize.width / 2 - innerPadding
     val rows = (sliderSize.height / checkerSize).toInt() + 1
-    val thumbHeightPx = with(LocalDensity.current) { config.size.height.toPx() }
+    val thumbHeightPx = with(LocalDensity.current) { config.thumbSize.height.toPx() }
     var thumbPositionY by remember { mutableStateOf(0f) }
 
     fun positionToAlphaValue(positionY: Float): Float {
@@ -104,11 +94,15 @@ internal fun AlphaSlider(
     ) {
 
         // draw checkerboard
+        var trackModifier = Modifier.fillMaxSize()
+        if (config.trackWidth != 0.dp) {
+            trackModifier = trackModifier.wrapContentSize().fillMaxHeight().size(config.trackWidth)
+        }
         Canvas(
-            modifier =
-                Modifier.fillMaxSize()
-                    .padding(horizontal = config.borderRadius)
-                    .clip(RoundedCornerShape(config.borderRadius))
+            trackModifier
+                .align(Alignment.Center)
+                .padding(horizontal = config.trackPadding)
+                .clip(RoundedCornerShape(config.trackBorderRadius))
         ) {
             for (row in 0 until rows) {
                 val dark = row % 2 == 0
@@ -128,10 +122,10 @@ internal fun AlphaSlider(
 
         // draw slider with color with applied alpha channel
         Canvas(
-            modifier =
-                Modifier.fillMaxSize()
-                    .padding(horizontal = config.borderRadius)
-                    .clip(RoundedCornerShape(config.borderRadius))
+            trackModifier
+                .align(Alignment.Center)
+                .padding(horizontal = config.trackPadding)
+                .clip(RoundedCornerShape(config.trackBorderRadius))
         ) {
             drawRect(
                 brush =
@@ -141,19 +135,23 @@ internal fun AlphaSlider(
             )
         }
 
+        // draw thumb only when we know the size
         if (!sliderSize.isEmpty()) {
             Canvas(modifier = Modifier.fillMaxSize()) {
+                val strokeWidth = config.thumbBorderSize.toPx()
+                val thumbWidth =
+                    if (config.thumbSize.width == 0.dp) sliderSize.width + strokeWidth
+                    else config.thumbSize.width.toPx()
+                val thumbX = (size.width - thumbWidth) / 2
+
                 drawRoundRect(
-                    color = config.color,
-                    topLeft = Offset(x = (config.borderSize.toPx()) / 2, y = thumbPositionY),
-                    size =
-                        Size(
-                            width = sliderSize.width - (config.borderSize.toPx()),
-                            height = thumbHeightPx,
-                        ),
-                    style = Stroke(width = config.borderSize.toPx()),
-                    cornerRadius =
-                        CornerRadius(config.borderRadius.toPx(), config.borderRadius.toPx()),
+                    color = config.thumbColor,
+                    topLeft = Offset(x = thumbX, y = thumbPositionY),
+                    size = Size(width = thumbWidth, height = thumbHeightPx),
+                    style =
+                        if (strokeWidth <= 0f) Fill
+                        else Stroke(width = strokeWidth, cap = StrokeCap.Round),
+                    cornerRadius = CornerRadius(x = config.thumbBorderRadius.toPx()),
                 )
             }
         }

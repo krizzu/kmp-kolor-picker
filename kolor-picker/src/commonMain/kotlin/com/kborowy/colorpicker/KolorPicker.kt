@@ -26,10 +26,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import com.kborowy.colorpicker.components.AlphaSlider
+import com.kborowy.colorpicker.components.AlphaTrack
 import com.kborowy.colorpicker.components.BrightnessPicker
-import com.kborowy.colorpicker.components.HueTrack
 import com.kborowy.colorpicker.components.HueSliderThumbConfig
+import com.kborowy.colorpicker.components.HueTrack
 import com.kborowy.colorpicker.components.PickerThumbConfig
 import com.kborowy.colorpicker.components.TrackConfig
 
@@ -61,16 +61,17 @@ fun KolorPicker(
         HueTrack(
             color = selectedHue,
             onColorSelected = { selectedHue = it },
-            config = TrackConfig.FilledCircle,
+            config = TrackConfig.CircleFilled,
             modifier = Modifier.weight(1f),
         )
 
         Spacer(modifier = Modifier.width(4.dp))
 
-        AlphaSlider(
+        AlphaTrack(
             color = selectedHue.copy(alpha = initialColor.alpha),
             onColorSelected = onColorSelected,
             modifier = Modifier.weight(1f),
+            config = TrackConfig.Default,
         )
     }
 }
