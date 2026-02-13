@@ -89,7 +89,7 @@ fun App() {
                     initialColor = selectedColor,
                     onColorSelected = { selectedColor = it },
                     modifier =
-                        Modifier.width(350.dp)
+                        Modifier.width(550.dp)
                             .height(300.dp)
                             .clip(RoundedCornerShape(16.dp))
                             .padding(4.dp),

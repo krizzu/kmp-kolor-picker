@@ -71,7 +71,7 @@ internal fun HueSlider(
 ) {
     var sliderSize by remember { mutableStateOf(Size.Zero) }
     var thumbPositionY by remember { mutableStateOf(0f) }
-    val thumbHeightPx = with(LocalDensity.current) { config.thumbHeight.toPx() }
+    val thumbHeightPx = with(LocalDensity.current) { config.thumbSize.height.toPx() }
     val updateColor by rememberUpdatedState(onColorSelected)
 
     fun onThumbPositionChange(position: Offset) {
@@ -120,8 +120,9 @@ internal fun HueSlider(
         if (!sliderSize.isEmpty()) {
             Canvas(modifier = Modifier.fillMaxSize()) {
                 val strokeWidth = config.thumbBorderSize.toPx()
-                val thumbPaddingPx = config.thumbHorizontalPadding.toPx()
-                val thumbWidth = sliderSize.width - (2 * thumbPaddingPx) + strokeWidth
+                val thumbWidth =
+                    if (config.thumbSize.width == 0.dp) sliderSize.width + strokeWidth
+                    else config.thumbSize.width.toPx()
                 val thumbX = (size.width - thumbWidth) / 2
 
                 drawRoundRect(
