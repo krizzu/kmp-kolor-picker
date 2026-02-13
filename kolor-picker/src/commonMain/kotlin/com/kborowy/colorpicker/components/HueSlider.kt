@@ -30,6 +30,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.CornerRadius
@@ -37,11 +38,14 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.coerceAtLeast
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.kborowy.colorpicker.ext.colorList
@@ -64,12 +68,12 @@ data class HueSliderThumbConfig(
 internal fun HueSlider(
     color: Color,
     onColorSelected: (Color) -> Unit,
+    config: SliderConfig,
     modifier: Modifier = Modifier,
-    thumbConfig: HueSliderThumbConfig = HueSliderThumbConfig.Default,
 ) {
     var sliderSize by remember { mutableStateOf(Size.Zero) }
     var thumbPositionY by remember { mutableStateOf(0f) }
-    val thumbHeightPx = with(LocalDensity.current) { thumbConfig.height.toPx() }
+    val thumbHeightPx = with(LocalDensity.current) { config.thumbHeight.toPx() }
     val updateColor by rememberUpdatedState(onColorSelected)
 
     fun onThumbPositionChange(position: Offset) {
@@ -106,28 +110,43 @@ internal fun HueSlider(
                 }
     ) {
         // color track
-        Canvas(
+        //
+        Box(
+            contentAlignment = Alignment.CenterStart,
             modifier =
                 Modifier.fillMaxSize()
-                    .padding(horizontal = thumbConfig.borderSize)
-                    .clip(RoundedCornerShape(4.dp))
+                    .padding(
+                        horizontal =
+                            (config.sliderPaddingRadius - config.thumbBorderSize).coerceAtLeast(
+                                0.dp
+                            )
+                    )
+                    .clip(RoundedCornerShape(size = config.sliderBorderRadius))
         ) {
-            drawRect(Brush.verticalGradient(Color.colorList))
+            Canvas(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                drawRect(Brush.verticalGradient(Color.colorList))
+            }
         }
 
         // draw thumb only when we know the size
         if (!sliderSize.isEmpty()) {
-            Canvas(modifier = Modifier.fillMaxSize()) {
+            Canvas(
+                modifier = Modifier.fillMaxSize()
+            ) {
+                val strokeWidth = config.thumbBorderSize.toPx()
+                val thumbWidth = sliderSize.width - (2 * config.sliderPaddingRadius.toPx()) + strokeWidth
+                val thumbX = (size.width - thumbWidth) / 2
+
                 drawRoundRect(
-                    color = thumbConfig.color,
-                    topLeft = Offset(x = (thumbConfig.borderSize.toPx()) / 2, y = thumbPositionY),
-                    size =
-                        Size(
-                            width = sliderSize.width - (thumbConfig.borderSize.toPx()),
-                            height = thumbHeightPx,
-                        ),
-                    style = Stroke(width = thumbConfig.borderSize.toPx()),
-                    cornerRadius = CornerRadius(thumbConfig.borderRadius, thumbConfig.borderRadius),
+                    color = config.thumbColor,
+                    topLeft = Offset(x = thumbX, y = thumbPositionY),
+                    size = Size(width = thumbWidth, height = thumbHeightPx),
+                    style =
+                        if (strokeWidth <= 0f) Fill
+                        else Stroke(width = strokeWidth, cap = StrokeCap.Round),
+                    cornerRadius = CornerRadius(x = config.thumbBorderRadius.toPx()),
                 )
             }
         }

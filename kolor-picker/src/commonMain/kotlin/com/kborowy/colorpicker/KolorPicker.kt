@@ -31,6 +31,7 @@ import com.kborowy.colorpicker.components.BrightnessPicker
 import com.kborowy.colorpicker.components.HueSlider
 import com.kborowy.colorpicker.components.HueSliderThumbConfig
 import com.kborowy.colorpicker.components.PickerThumbConfig
+import com.kborowy.colorpicker.components.SliderConfig
 
 /**
  * v2 todo:
@@ -60,7 +61,7 @@ fun KolorPicker(
         HueSlider(
             color = selectedHue,
             onColorSelected = { selectedHue = it },
-            thumbConfig = hueSliderConfig,
+            config = SliderConfig.Default,
             modifier = Modifier.weight(1f),
         )
 
