@@ -26,7 +26,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -43,24 +42,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
 import com.kborowy.colorpicker.ext.colorList
 import com.kborowy.colorpicker.ext.hueDegreeToColor
 import com.kborowy.colorpicker.ext.toHueDegree
-
-@Immutable
-data class HueSliderThumbConfig(
-    val height: Dp = 12.dp,
-    val color: Color = Color.White,
-    val borderSize: Dp = 4.dp,
-    val borderRadius: Float = 6f,
-) {
-    companion object {
-        val Default = HueSliderThumbConfig()
-    }
-}
 
 @Composable
 internal fun HueTrack(

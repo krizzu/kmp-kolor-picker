@@ -41,8 +41,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.kborowy.colorpicker.KolorPicker
-import com.kborowy.colorpicker.components.HueSliderThumbConfig
-import com.kborowy.colorpicker.components.PickerThumbConfig
 import com.kborowy.colorpicker.ext.toHex
 import kotlin.random.Random
 import kotlin.random.nextInt
@@ -68,7 +66,9 @@ fun App() {
                 Column {
                     Button(onClick = { visible = !visible }) { Text("Toggle visibility") }
 
-                    Button(enabled = !visible, onClick = { selectedColor = Color.random() }) { Text("Randomize color") }
+                    Button(enabled = !visible, onClick = { selectedColor = Color.random() }) {
+                        Text("Randomize color")
+                    }
                 }
 
                 Spacer(modifier = Modifier.width(10.dp))
@@ -86,11 +86,8 @@ fun App() {
                 KolorPicker(
                     initialColor = selectedColor,
                     onColorSelected = { selectedColor = it },
-                    modifier =
-                        Modifier.width(400.dp)
-                            .height(300.dp),
-                    hueSliderConfig = HueSliderThumbConfig.Default.copy(color = Color.Cyan),
-                    pickerThumbConfig = PickerThumbConfig(color = Color.DarkGray),
+                    modifier = Modifier.width(400.dp).height(300.dp),
+                    // todo: config
                 )
             }
 

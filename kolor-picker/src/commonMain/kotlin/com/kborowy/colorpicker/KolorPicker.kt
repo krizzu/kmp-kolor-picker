@@ -28,9 +28,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.kborowy.colorpicker.components.AlphaTrack
 import com.kborowy.colorpicker.components.BrightnessPicker
-import com.kborowy.colorpicker.components.HueSliderThumbConfig
 import com.kborowy.colorpicker.components.HueTrack
-import com.kborowy.colorpicker.components.PickerThumbConfig
+import com.kborowy.colorpicker.components.PickerConfig
 import com.kborowy.colorpicker.components.TrackConfig
 
 /**
@@ -43,8 +42,6 @@ fun KolorPicker(
     initialColor: Color,
     onColorSelected: (Color) -> Unit,
     modifier: Modifier = Modifier,
-    hueSliderConfig: HueSliderThumbConfig = HueSliderThumbConfig.Default,
-    pickerThumbConfig: PickerThumbConfig = PickerThumbConfig.Default,
 ) {
     var selectedHue by remember { mutableStateOf(initialColor) }
 
@@ -52,7 +49,7 @@ fun KolorPicker(
         BrightnessPicker(
             color = selectedHue,
             onColorSelected = { onColorSelected(it.copy(alpha = initialColor.alpha)) },
-            thumbConfig = pickerThumbConfig,
+            config = PickerConfig.CircleFilled,
             modifier = Modifier.weight(9f),
         )
 

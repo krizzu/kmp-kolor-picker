@@ -32,7 +32,7 @@ fun ThumbCanvas(
             size = Size(width = thumbWidth, height = height),
             style =
                 if (strokeWidth <= 0f) Fill else Stroke(width = strokeWidth, cap = StrokeCap.Round),
-            cornerRadius = CornerRadius(x = config.thumbBorderRadius.toPx()),
+            cornerRadius = CornerRadius(x = config.thumbCornerRadius.toPx()),
         )
     }
 }

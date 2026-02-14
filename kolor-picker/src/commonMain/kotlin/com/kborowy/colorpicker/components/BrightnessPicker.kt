@@ -18,53 +18,46 @@ package com.kborowy.colorpicker.components
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntSize
-import androidx.compose.ui.unit.dp
 import com.kborowy.colorpicker.ext.fromHsv
 import com.kborowy.colorpicker.ext.toHsv
 import com.kborowy.colorpicker.ext.toHueDegree
-
-@Immutable
-data class PickerThumbConfig(
-    val size: Dp = 16.dp,
-    val strokeWidth: Float = 4f,
-    val color: Color = Color.White,
-) {
-    companion object {
-        val Default = PickerThumbConfig()
-    }
-}
 
 @Composable
 internal fun BrightnessPicker(
     color: Color,
     onColorSelected: (Color) -> Unit,
+    config: PickerConfig,
     modifier: Modifier = Modifier,
-    thumbConfig: PickerThumbConfig = PickerThumbConfig.Default,
 ) {
     val initialSelectedHue = remember { color }
     var rectSize by remember { mutableStateOf(IntSize.Zero) }
     var selectorPosition by remember { mutableStateOf(Offset.Zero) }
-    val thumbSizePx = with(LocalDensity.current) { thumbConfig.size.toPx() }
-    val strokeSizePx = thumbConfig.strokeWidth
+    val thumbSizePx = with(LocalDensity.current) { config.thumbSize.toPx() }
+    val strokeSizePx = with(LocalDensity.current) { config.thumbBorderSize.toPx() }
     val thumbRadius = thumbSizePx / 2f
     val thumbEdge = thumbRadius + strokeSizePx / 2f
 
@@ -89,25 +82,41 @@ internal fun BrightnessPicker(
 
         selectorPosition = colorToPosition(initialSelectedHue, rectSize, thumbEdge)
     }
-
-    Canvas(
-        modifier =
-            modifier
-                .fillMaxSize()
-                .onSizeChanged { rectSize = it }
-                .pointerInput(Unit) { detectTapGestures { updatePosition(it) } }
-                .pointerInput(Unit) {
-                    detectDragGestures { change, _ -> updatePosition(change.position) }
-                }
-    ) {
-        drawRect(Brush.horizontalGradient(listOf(Color.White, color)))
-        drawRect(Brush.verticalGradient(listOf(Color.Transparent, Color.Black)))
-        drawCircle(
-            color = thumbConfig.color,
-            style = Stroke(width = strokeSizePx, cap = StrokeCap.Round),
-            center = selectorPosition,
-            radius = thumbRadius,
-        )
+    Box(modifier = modifier) {
+        Box(
+            modifier =
+                Modifier
+                    .padding(config.pickerPadding)
+                    .clip(RoundedCornerShape(size = config.pickerRadius))
+        ) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                drawRect(Brush.horizontalGradient(listOf(Color.White, color)))
+                drawRect(Brush.verticalGradient(listOf(Color.Transparent, Color.Black)))
+            }
+        }
+        Canvas(
+            modifier =
+                Modifier.fillMaxSize()
+                    .onSizeChanged { rectSize = it }
+                    .pointerInput(Unit) { detectTapGestures { updatePosition(it) } }
+                    .pointerInput(Unit) {
+                        detectDragGestures { change, _ -> updatePosition(change.position) }
+                    }
+        ) {
+            drawRoundRect(
+                color = config.thumbColor,
+                topLeft =
+                    Offset(
+                        x = selectorPosition.x - thumbRadius,
+                        y = selectorPosition.y - thumbRadius,
+                    ),
+                size = Size(width = thumbSizePx, height = thumbSizePx),
+                style =
+                    if (strokeSizePx <= 0f) Fill
+                    else Stroke(width = strokeSizePx, cap = StrokeCap.Round),
+                cornerRadius = CornerRadius(config.thumbRadius.toPx()),
+            )
+        }
     }
 }
 
