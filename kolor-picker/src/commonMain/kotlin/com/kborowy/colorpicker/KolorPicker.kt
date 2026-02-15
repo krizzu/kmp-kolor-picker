@@ -17,7 +17,6 @@ package com.kborowy.colorpicker
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -25,22 +24,38 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.dp
 import com.kborowy.colorpicker.components.AlphaTrack
 import com.kborowy.colorpicker.components.BrightnessPicker
 import com.kborowy.colorpicker.components.HueTrack
 import com.kborowy.colorpicker.components.PickerConfig
 import com.kborowy.colorpicker.components.TrackConfig
 
-/**
- * v2 todo:
- * - Add other default slider configs (full circle?)
- * - Unify picker configs (have single data class)
- */
 @Composable
 fun KolorPicker(
     initialColor: Color,
     onColorSelected: (Color) -> Unit,
+    modifier: Modifier = Modifier,
+    pickerConfig: PickerConfig = PickerConfig.Default,
+    trackConfig: TrackConfig = TrackConfig.Default,
+) {
+
+    KolorPicker(
+        initialColor = initialColor,
+        onColorSelected = onColorSelected,
+        pickerConfig = pickerConfig,
+        alphaTrackConfig = trackConfig,
+        hueTrackConfig = trackConfig,
+        modifier = modifier,
+    )
+}
+
+@Composable
+fun KolorPicker(
+    initialColor: Color,
+    onColorSelected: (Color) -> Unit,
+    pickerConfig: PickerConfig,
+    alphaTrackConfig: TrackConfig,
+    hueTrackConfig: TrackConfig,
     modifier: Modifier = Modifier,
 ) {
     var selectedHue by remember { mutableStateOf(initialColor) }
@@ -49,26 +64,26 @@ fun KolorPicker(
         BrightnessPicker(
             color = selectedHue,
             onColorSelected = { onColorSelected(it.copy(alpha = initialColor.alpha)) },
-            config = PickerConfig.CircleFilled,
-            modifier = Modifier.weight(9f),
+            config = pickerConfig,
+            modifier = Modifier.weight(8f),
         )
 
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.weight(0.25f))
 
         HueTrack(
             color = selectedHue,
             onColorSelected = { selectedHue = it },
-            config = TrackConfig.CircleFilled,
+            config = hueTrackConfig,
             modifier = Modifier.weight(1f),
         )
 
-        Spacer(modifier = Modifier.width(4.dp))
+        Spacer(modifier = Modifier.weight(0.25f))
 
         AlphaTrack(
             color = selectedHue.copy(alpha = initialColor.alpha),
             onColorSelected = onColorSelected,
             modifier = Modifier.weight(1f),
-            config = TrackConfig.Default,
+            config = alphaTrackConfig,
         )
     }
 }

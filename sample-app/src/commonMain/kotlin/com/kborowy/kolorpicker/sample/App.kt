@@ -86,8 +86,7 @@ fun App() {
                 KolorPicker(
                     initialColor = selectedColor,
                     onColorSelected = { selectedColor = it },
-                    modifier = Modifier.width(400.dp).height(300.dp),
-                    // todo: config
+                    modifier = Modifier.padding(32.dp),
                 )
             }
 

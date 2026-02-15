@@ -42,7 +42,7 @@ data class TrackConfig(
         val Default =
             TrackConfig(
                 trackBorderRadius = 4.dp,
-                trackPadding = 6.dp,
+                trackPadding = 4.dp,
                 trackWidth = 0.dp,
                 thumbSize = DpSize(width = 0.dp, height = 12.dp),
                 thumbColor = Color.White,
@@ -83,7 +83,7 @@ data class PickerConfig(
         val Default =
             PickerConfig(
                 thumbSize = 16.dp,
-                thumbRadius = 0.dp,
+                thumbRadius = 4.dp,
                 thumbColor = Color.White,
                 thumbBorderSize = 4.dp,
                 pickerRadius = 4.dp,
