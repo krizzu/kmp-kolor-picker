@@ -13,4 +13,3 @@ theme:
 nav:
   - Home: index.md
   - API: api.md
-  - API reference: api/index.html

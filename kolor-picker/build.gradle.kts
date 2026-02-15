@@ -46,6 +46,6 @@ dokka {
     dokkaPublications.html {
         moduleName.set("KMP Kolor Picker")
         moduleVersion.set(project.version.toString())
-        outputDirectory.set(rootDir.resolve("docs/api/"))
+        outputDirectory.set(rootDir.resolve("docs/api-ref/"))
     }
 }
