@@ -39,9 +39,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import com.kborowy.colorpicker.KolorPicker
-import com.kborowy.colorpicker.ext.toHex
 import kotlin.random.Random
 import kotlin.random.nextInt
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -112,3 +112,21 @@ private val Color.alphaFormatted: String
         }
         return "${number.first()}.${number[1].take(2)}"
     }
+
+private fun Color.toHex(): String =
+    buildString {
+            append((toArgb() shr 16 and 0xff).toHex())
+            append((toArgb() shr 8 and 0xff).toHex())
+            append((toArgb() and 0xff).toHex())
+        }
+        .uppercase()
+
+private fun Int.toHex(): String {
+    return this.toString(16).let {
+        if (it.length == 1) {
+            "0$it"
+        } else {
+            it
+        }
+    }
+}
