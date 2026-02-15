@@ -9,3 +9,7 @@ theme:
     text: Lato
   icon:
     logo: material/palette
+
+nav:
+  - Home: index.md
+  - API reference: api/index.html
