@@ -1,6 +1,6 @@
-# API Reference
+# API
 
-For complete API reference, see the [API Reference page](api-ref/index.html).
+For complete API reference, see the [API Reference page](../api-ref/index.html).
 
 ## Basic Usage
 

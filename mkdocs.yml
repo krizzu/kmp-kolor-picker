@@ -3,13 +3,24 @@ site_url: https://krizzu.github.io/kmp-kolor-picker
 theme:
   name: material
   palette:
-    primary: pink
+    primary: orange
     accent: green
   font:
     text: Lato
-  icon:
-    logo: material/palette
+  logo: assets/palette.svg
+  favicon: assets/palette.svg
+  features:
+    - content.code.copy
 
 nav:
   - Home: index.md
   - API: api.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences

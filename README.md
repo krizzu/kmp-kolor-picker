@@ -62,7 +62,7 @@ KolorPicker(
 )
 ```
 
-See [API page](docs/api.md) for full specification. 
+See [API page](api.md) for full specification. 
 
 
 ## License
