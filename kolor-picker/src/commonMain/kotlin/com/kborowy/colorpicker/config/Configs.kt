@@ -1,4 +1,4 @@
-package com.kborowy.colorpicker.components
+package com.kborowy.colorpicker.config
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Immutable

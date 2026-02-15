@@ -27,8 +27,8 @@ import androidx.compose.ui.graphics.Color
 import com.kborowy.colorpicker.components.AlphaTrack
 import com.kborowy.colorpicker.components.BrightnessPicker
 import com.kborowy.colorpicker.components.HueTrack
-import com.kborowy.colorpicker.components.PickerConfig
-import com.kborowy.colorpicker.components.TrackConfig
+import com.kborowy.colorpicker.config.PickerConfig
+import com.kborowy.colorpicker.config.TrackConfig
 
 @Composable
 fun KolorPicker(

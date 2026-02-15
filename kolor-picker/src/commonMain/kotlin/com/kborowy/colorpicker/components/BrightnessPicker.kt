@@ -42,6 +42,7 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.IntSize
+import com.kborowy.colorpicker.config.PickerConfig
 import com.kborowy.colorpicker.ext.fromHsv
 import com.kborowy.colorpicker.ext.toHsv
 import com.kborowy.colorpicker.ext.toHueDegree
@@ -120,7 +121,7 @@ internal fun BrightnessPicker(
     }
 }
 
-fun colorToPosition(c: Color, size: IntSize, edge: Float): Offset {
+private fun colorToPosition(c: Color, size: IntSize, edge: Float): Offset {
     val (_, saturation, value) = c.toHsv()
     val travelWidth = (size.width - 2 * edge).coerceAtLeast(1f)
     val travelHeight = (size.height - 2 * edge).coerceAtLeast(1f)

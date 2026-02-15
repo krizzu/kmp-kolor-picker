@@ -44,6 +44,7 @@ import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.toSize
+import com.kborowy.colorpicker.config.TrackConfig
 import com.kborowy.colorpicker.ext.colorList
 import com.kborowy.colorpicker.ext.hueDegreeToColor
 import com.kborowy.colorpicker.ext.toHueDegree

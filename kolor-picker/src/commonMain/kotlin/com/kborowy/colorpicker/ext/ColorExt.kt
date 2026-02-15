@@ -98,16 +98,13 @@ internal fun hueDegreeToColor(hueDegrees: Float): Color {
     return Color(r, g, b)
 }
 
-fun Color.toHex(): String =
+internal fun Color.toHex(): String =
     buildString {
             append((toArgb() shr 16 and 0xff).toHex())
             append((toArgb() shr 8 and 0xff).toHex())
             append((toArgb() and 0xff).toHex())
         }
         .uppercase()
-
-
-
 
 private fun Int.toHex(): String {
     return this.toString(16).let {

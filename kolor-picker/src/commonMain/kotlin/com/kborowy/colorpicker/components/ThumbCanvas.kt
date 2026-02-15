@@ -10,9 +10,10 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Fill
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.unit.dp
+import com.kborowy.colorpicker.config.TrackConfig
 
 @Composable
-fun ThumbCanvas(
+internal fun ThumbCanvas(
     config: TrackConfig,
     trackWidth: Float,
     positionY: Float,
