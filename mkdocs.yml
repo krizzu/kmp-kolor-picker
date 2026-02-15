@@ -1,0 +1,11 @@
+site_name: KMP Kolor Picker
+site_url: https://krizzu.github.io/kmp-kolor-picker
+theme:
+  name: material
+  palette:
+    primary: pink
+    accent: green
+  font:
+    text: Lato
+  icon:
+    logo: material/palette
