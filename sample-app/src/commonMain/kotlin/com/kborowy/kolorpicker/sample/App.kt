@@ -18,11 +18,9 @@ package com.kborowy.kolorpicker.sample
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -42,7 +40,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.unit.DpSize
 import androidx.compose.ui.unit.dp
 import com.kborowy.colorpicker.KolorPicker
 import com.kborowy.colorpicker.config.PickerConfig
@@ -67,48 +64,33 @@ fun App() {
                 .padding(top = 50.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            // Row(verticalAlignment = Alignment.CenterVertically) {
-            //     Column {
-            //         Button(onClick = { visible = !visible }) { Text("Toggle visibility") }
-            //
-            //         Button(enabled = !visible, onClick = { selectedColor = Color.random() }) {
-            //             Text("Randomize color")
-            //         }
-            //     }
-            //
-            //     Spacer(modifier = Modifier.width(10.dp))
-            //
-            //     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-            //         Text("#${selectedColor.toHex()}", color = Color.White)
-            //         Text("alpha: ${selectedColor.alphaFormatted}", color = Color.White)
-            //         Box(modifier = Modifier.size(100.dp).background(selectedColor))
-            //     }
-            // }
-            //
-            // Spacer(modifier = Modifier.height(10.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Column {
+                    Button(onClick = { visible = !visible }) { Text("Toggle visibility") }
+
+                    Button(enabled = !visible, onClick = { selectedColor = Color.random() }) {
+                        Text("Randomize color")
+                    }
+                }
+
+                Spacer(modifier = Modifier.width(10.dp))
+
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text("#${selectedColor.toHex()}", color = Color.White)
+                    Text("alpha: ${selectedColor.alphaFormatted}", color = Color.White)
+                    Box(modifier = Modifier.size(100.dp).background(selectedColor))
+                }
+            }
+
+            Spacer(modifier = Modifier.height(10.dp))
 
             if (visible) {
                 KolorPicker(
                     initialColor = selectedColor,
                     onColorSelected = { selectedColor = it },
-                    modifier = Modifier.width(500.dp).height(400.dp),
-                    trackConfig = TrackConfig.CircleFilled.copy(
-                        trackBorderRadius = 30.dp,
-                        trackPadding = 0.dp,
-                        trackWidth = 30.dp,
-                        thumbSize = DpSize(width = 24.dp, height = 24.dp),
-                        thumbColor = Color.White,
-                        thumbCornerRadius = 24.dp,
-                        thumbBorderSize = 0.dp,
-                    ),
-                    pickerConfig = PickerConfig.Circle.copy(
-                        thumbSize = 16.dp,
-                        thumbRadius = 16.dp,
-                        thumbColor = Color.White,
-                        thumbBorderSize = 4.dp,
-                        pickerRadius = 4.dp,
-                        pickerPadding = PaddingValues(0.dp)
-                    )
+                    modifier = Modifier.width(400.dp).height(300.dp),
+                    trackConfig = TrackConfig.CircleFilled,
+                    pickerConfig = PickerConfig.Circle,
                 )
             }
 

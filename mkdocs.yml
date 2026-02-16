@@ -15,6 +15,7 @@ theme:
 nav:
   - Home: index.md
   - API: api.md
+  - Demo: demo/index.html
 
 markdown_extensions:
   - pymdownx.highlight:
@@ -24,3 +25,9 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.superfences
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      name: KMP Kolor Picker
+      link: https://github.com/krizzu/kmp-kolor-picker

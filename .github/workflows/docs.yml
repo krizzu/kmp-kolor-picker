@@ -36,6 +36,9 @@ jobs:
         with:
           python-version: '3.x'
 
+      - name: Build web demo
+        run: ./gradlew :sample-app:buildDemoWasm
+
       - name: Install MkDocs and dependencies
         run: |
           pip install mkdocs mkdocs-material

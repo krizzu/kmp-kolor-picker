@@ -19,3 +19,5 @@ captures
 iosApp/DerivedData
 # dokka generated files
 docs/api-ref/
+docs/demo/
+site
