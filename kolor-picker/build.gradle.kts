@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
     alias(libs.plugins.publish)
+    alias(libs.plugins.dokka)
 }
 
 kotlin {
@@ -38,5 +39,13 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
+    }
+}
+
+dokka {
+    dokkaPublications.html {
+        moduleName.set("KMP Kolor Picker")
+        moduleVersion.set(project.version.toString())
+        outputDirectory.set(rootDir.resolve("docs/api-ref/"))
     }
 }

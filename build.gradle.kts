@@ -7,8 +7,9 @@ plugins {
     alias(libs.plugins.composeCompiler) apply false
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.publish) apply false
+    alias(libs.plugins.composeHotReload) apply false
+    alias(libs.plugins.dokka) apply false
     alias(libs.plugins.spotless)
-    // alias(libs.plugins.validator.abi) apply false
 }
 
 spotless {

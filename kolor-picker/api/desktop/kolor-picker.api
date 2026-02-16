@@ -1,52 +1,64 @@
 public final class com/kborowy/colorpicker/KolorPickerKt {
-	public static final fun KolorPicker-T042LqI (Lkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;JLcom/kborowy/colorpicker/components/HueSliderThumbConfig;Lcom/kborowy/colorpicker/components/PickerThumbConfig;Landroidx/compose/runtime/Composer;II)V
+	public static final fun KolorPicker-ZPw9REg (JLkotlin/jvm/functions/Function1;Lcom/kborowy/colorpicker/config/PickerConfig;Lcom/kborowy/colorpicker/config/TrackConfig;Lcom/kborowy/colorpicker/config/TrackConfig;Landroidx/compose/ui/Modifier;Landroidx/compose/runtime/Composer;II)V
+	public static final fun KolorPicker-yWKOrZg (JLkotlin/jvm/functions/Function1;Landroidx/compose/ui/Modifier;Lcom/kborowy/colorpicker/config/PickerConfig;Lcom/kborowy/colorpicker/config/TrackConfig;Landroidx/compose/runtime/Composer;II)V
 }
 
-public final class com/kborowy/colorpicker/components/HueSliderThumbConfig {
+public final class com/kborowy/colorpicker/config/PickerConfig {
 	public static final field $stable I
-	public static final field Companion Lcom/kborowy/colorpicker/components/HueSliderThumbConfig$Companion;
-	public synthetic fun <init> (FJFFILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (FJFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public final fun component1-D9Ej5fM ()F
-	public final fun component2-0d7_KjU ()J
+	public static final field Companion Lcom/kborowy/colorpicker/config/PickerConfig$Companion;
+	public synthetic fun <init> (Landroidx/compose/foundation/layout/PaddingValues;FFFJFLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public final fun component1 ()Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun component2-D9Ej5fM ()F
 	public final fun component3-D9Ej5fM ()F
-	public final fun component4 ()F
-	public final fun copy-_9Qs8tE (FJFF)Lcom/kborowy/colorpicker/components/HueSliderThumbConfig;
-	public static synthetic fun copy-_9Qs8tE$default (Lcom/kborowy/colorpicker/components/HueSliderThumbConfig;FJFFILjava/lang/Object;)Lcom/kborowy/colorpicker/components/HueSliderThumbConfig;
+	public final fun component4-D9Ej5fM ()F
+	public final fun component5-0d7_KjU ()J
+	public final fun component6-D9Ej5fM ()F
+	public final fun copy-iIYvX_A (Landroidx/compose/foundation/layout/PaddingValues;FFFJF)Lcom/kborowy/colorpicker/config/PickerConfig;
+	public static synthetic fun copy-iIYvX_A$default (Lcom/kborowy/colorpicker/config/PickerConfig;Landroidx/compose/foundation/layout/PaddingValues;FFFJFILjava/lang/Object;)Lcom/kborowy/colorpicker/config/PickerConfig;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getBorderRadius ()F
-	public final fun getBorderSize-D9Ej5fM ()F
-	public final fun getColor-0d7_KjU ()J
-	public final fun getHeight-D9Ej5fM ()F
+	public final fun getPickerPadding ()Landroidx/compose/foundation/layout/PaddingValues;
+	public final fun getPickerRadius-D9Ej5fM ()F
+	public final fun getThumbBorderSize-D9Ej5fM ()F
+	public final fun getThumbColor-0d7_KjU ()J
+	public final fun getThumbRadius-D9Ej5fM ()F
+	public final fun getThumbSize-D9Ej5fM ()F
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/kborowy/colorpicker/components/HueSliderThumbConfig$Companion {
-	public final fun getDefault ()Lcom/kborowy/colorpicker/components/HueSliderThumbConfig;
+public final class com/kborowy/colorpicker/config/PickerConfig$Companion {
+	public final fun getCircle ()Lcom/kborowy/colorpicker/config/PickerConfig;
+	public final fun getCircleFilled ()Lcom/kborowy/colorpicker/config/PickerConfig;
+	public final fun getDefault ()Lcom/kborowy/colorpicker/config/PickerConfig;
 }
 
-public final class com/kborowy/colorpicker/components/PickerThumbConfig {
+public final class com/kborowy/colorpicker/config/TrackConfig {
 	public static final field $stable I
-	public static final field Companion Lcom/kborowy/colorpicker/components/PickerThumbConfig$Companion;
-	public synthetic fun <init> (FJILkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> (FJLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public static final field Companion Lcom/kborowy/colorpicker/config/TrackConfig$Companion;
+	public synthetic fun <init> (FFFJJFFLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-D9Ej5fM ()F
-	public final fun component2-0d7_KjU ()J
-	public final fun copy-cXLIe8U (FJ)Lcom/kborowy/colorpicker/components/PickerThumbConfig;
-	public static synthetic fun copy-cXLIe8U$default (Lcom/kborowy/colorpicker/components/PickerThumbConfig;FJILjava/lang/Object;)Lcom/kborowy/colorpicker/components/PickerThumbConfig;
+	public final fun component2-D9Ej5fM ()F
+	public final fun component3-D9Ej5fM ()F
+	public final fun component4-MYxV2XQ ()J
+	public final fun component5-0d7_KjU ()J
+	public final fun component6-D9Ej5fM ()F
+	public final fun component7-D9Ej5fM ()F
+	public final fun copy-Aegx1cM (FFFJJFF)Lcom/kborowy/colorpicker/config/TrackConfig;
+	public static synthetic fun copy-Aegx1cM$default (Lcom/kborowy/colorpicker/config/TrackConfig;FFFJJFFILjava/lang/Object;)Lcom/kborowy/colorpicker/config/TrackConfig;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getColor-0d7_KjU ()J
-	public final fun getSize-D9Ej5fM ()F
+	public final fun getThumbBorderSize-D9Ej5fM ()F
+	public final fun getThumbColor-0d7_KjU ()J
+	public final fun getThumbCornerRadius-D9Ej5fM ()F
+	public final fun getThumbSize-MYxV2XQ ()J
+	public final fun getTrackBorderRadius-D9Ej5fM ()F
+	public final fun getTrackPadding-D9Ej5fM ()F
+	public final fun getTrackWidth-D9Ej5fM ()F
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
 }
 
-public final class com/kborowy/colorpicker/components/PickerThumbConfig$Companion {
-	public final fun getDefault ()Lcom/kborowy/colorpicker/components/PickerThumbConfig;
-}
-
-public final class com/kborowy/colorpicker/ext/ColorExtKt {
-	public static final fun toHex-8_81llA (J)Ljava/lang/String;
+public final class com/kborowy/colorpicker/config/TrackConfig$Companion {
+	public final fun getCircleFilled ()Lcom/kborowy/colorpicker/config/TrackConfig;
+	public final fun getDefault ()Lcom/kborowy/colorpicker/config/TrackConfig;
 }
 

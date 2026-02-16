@@ -28,7 +28,6 @@ import androidx.compose.foundation.layout.safeContent
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -39,13 +38,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.dp
 import com.kborowy.colorpicker.KolorPicker
-import com.kborowy.colorpicker.components.HueSliderThumbConfig
-import com.kborowy.colorpicker.components.PickerThumbConfig
-import com.kborowy.colorpicker.ext.toHex
+import com.kborowy.colorpicker.config.PickerConfig
+import com.kborowy.colorpicker.config.TrackConfig
 import kotlin.random.Random
 import kotlin.random.nextInt
 import org.jetbrains.compose.ui.tooling.preview.Preview
@@ -53,7 +51,9 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun App() {
-    var selectedColor by remember { mutableStateOf(Color(red = 120, green = 194, blue = 87)) }
+    var selectedColor by remember {
+        mutableStateOf(Color(red = 233, green = 32, blue = 99, alpha = 255))
+    }
     var visible by remember { mutableStateOf(true) }
 
     MaterialTheme {
@@ -69,7 +69,7 @@ fun App() {
                     Button(onClick = { visible = !visible }) { Text("Toggle visibility") }
 
                     Button(enabled = !visible, onClick = { selectedColor = Color.random() }) {
-                        Text("Random initial")
+                        Text("Randomize color")
                     }
                 }
 
@@ -77,6 +77,7 @@ fun App() {
 
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Text("#${selectedColor.toHex()}", color = Color.White)
+                    Text("alpha: ${selectedColor.alphaFormatted}", color = Color.White)
                     Box(modifier = Modifier.size(100.dp).background(selectedColor))
                 }
             }
@@ -87,13 +88,9 @@ fun App() {
                 KolorPicker(
                     initialColor = selectedColor,
                     onColorSelected = { selectedColor = it },
-                    modifier =
-                        Modifier.width(350.dp)
-                            .height(300.dp)
-                            .clip(RoundedCornerShape(16.dp))
-                            .padding(10.dp),
-                    hueSliderConfig = HueSliderThumbConfig(color = Color.Cyan),
-                    pickerThumbConfig = PickerThumbConfig(color = Color.DarkGray),
+                    modifier = Modifier.width(400.dp).height(300.dp),
+                    trackConfig = TrackConfig.CircleFilled,
+                    pickerConfig = PickerConfig.Circle,
                 )
             }
 
@@ -108,4 +105,32 @@ private fun Color.Companion.random(): Color =
         red = Random.nextInt(0..255),
         green = Random.nextInt(0..255),
         blue = Random.nextInt(0..255),
+        alpha = Random.nextInt(0..255),
     )
+
+private val Color.alphaFormatted: String
+    get() {
+        val number = alpha.toString().split(".")
+        if (number[1].isEmpty()) {
+            return "${number.first()}.00}"
+        }
+        return "${number.first()}.${number[1].take(2)}"
+    }
+
+private fun Color.toHex(): String =
+    buildString {
+            append((toArgb() shr 16 and 0xff).toHex())
+            append((toArgb() shr 8 and 0xff).toHex())
+            append((toArgb() and 0xff).toHex())
+        }
+        .uppercase()
+
+private fun Int.toHex(): String {
+    return this.toString(16).let {
+        if (it.length == 1) {
+            "0$it"
+        } else {
+            it
+        }
+    }
+}

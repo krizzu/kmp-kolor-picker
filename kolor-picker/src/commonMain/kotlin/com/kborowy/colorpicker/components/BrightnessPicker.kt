@@ -1,0 +1,139 @@
+/*
+ * Copyright 2025 Krzysztof Borowy
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.kborowy.colorpicker.components
+
+import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.gestures.detectDragGestures
+import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.geometry.Size
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.graphics.drawscope.Fill
+import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.onSizeChanged
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.unit.IntSize
+import com.kborowy.colorpicker.config.PickerConfig
+import com.kborowy.colorpicker.ext.fromHsv
+import com.kborowy.colorpicker.ext.toHsv
+import com.kborowy.colorpicker.ext.toHueDegree
+
+@Composable
+internal fun BrightnessPicker(
+    color: Color,
+    onColorSelected: (Color) -> Unit,
+    config: PickerConfig,
+    modifier: Modifier = Modifier,
+) {
+    val initialSelectedHue = remember { color }
+    var rectSize by remember { mutableStateOf(IntSize.Zero) }
+    var selectorPosition by remember { mutableStateOf(Offset.Zero) }
+    val thumbSizePx = with(LocalDensity.current) { config.thumbSize.toPx() }
+    val strokeSizePx = with(LocalDensity.current) { config.thumbBorderSize.toPx() }
+    val thumbRadius = thumbSizePx / 2f
+    val thumbEdge = thumbRadius + strokeSizePx / 2f
+
+    fun updatePosition(newOffset: Offset) {
+        val x = newOffset.x.coerceIn(thumbEdge, rectSize.width.toFloat() - thumbEdge)
+        val y = newOffset.y.coerceIn(thumbEdge, rectSize.height.toFloat() - thumbEdge)
+        selectorPosition = Offset(x, y)
+    }
+
+    LaunchedEffect(rectSize, selectorPosition, color) {
+        if (rectSize == IntSize.Zero || selectorPosition == Offset.Zero) {
+            return@LaunchedEffect
+        }
+        val newColor = positionToColor(color, rectSize, selectorPosition, thumbEdge)
+        onColorSelected(newColor)
+    }
+
+    LaunchedEffect(rectSize, initialSelectedHue) {
+        if (rectSize == IntSize.Zero) {
+            return@LaunchedEffect
+        }
+
+        selectorPosition = colorToPosition(initialSelectedHue, rectSize, thumbEdge)
+    }
+    Box(modifier = modifier) {
+        Box(
+            modifier =
+                Modifier.padding(config.pickerPadding)
+                    .clip(RoundedCornerShape(size = config.pickerRadius))
+        ) {
+            Canvas(modifier = Modifier.fillMaxSize()) {
+                drawRect(Brush.horizontalGradient(listOf(Color.White, color)))
+                drawRect(Brush.verticalGradient(listOf(Color.Transparent, Color.Black)))
+            }
+        }
+        Canvas(
+            modifier =
+                Modifier.fillMaxSize()
+                    .onSizeChanged { rectSize = it }
+                    .pointerInput(Unit) { detectTapGestures { updatePosition(it) } }
+                    .pointerInput(Unit) {
+                        detectDragGestures { change, _ -> updatePosition(change.position) }
+                    }
+        ) {
+            drawRoundRect(
+                color = config.thumbColor,
+                topLeft =
+                    Offset(
+                        x = selectorPosition.x - thumbRadius,
+                        y = selectorPosition.y - thumbRadius,
+                    ),
+                size = Size(width = thumbSizePx, height = thumbSizePx),
+                style =
+                    if (strokeSizePx <= 0f) Fill
+                    else Stroke(width = strokeSizePx, cap = StrokeCap.Round),
+                cornerRadius = CornerRadius(config.thumbRadius.toPx()),
+            )
+        }
+    }
+}
+
+private fun colorToPosition(c: Color, size: IntSize, edge: Float): Offset {
+    val (_, saturation, value) = c.toHsv()
+    val travelWidth = (size.width - 2 * edge).coerceAtLeast(1f)
+    val travelHeight = (size.height - 2 * edge).coerceAtLeast(1f)
+    val x = saturation * travelWidth + edge
+    val y = (1f - value) * travelHeight + edge
+    return Offset(x, y)
+}
+
+private fun positionToColor(color: Color, size: IntSize, position: Offset, edge: Float): Color {
+    val hue = color.toHueDegree()
+    val travelWidth = (size.width - 2 * edge).coerceAtLeast(1f)
+    val travelHeight = (size.height - 2 * edge).coerceAtLeast(1f)
+    val saturation = (position.x - edge) / travelWidth
+    val value = 1f - (position.y - edge) / travelHeight
+    return Color.fromHsv(hue, saturation.coerceIn(0f, 1f), value.coerceIn(0f, 1f))
+}

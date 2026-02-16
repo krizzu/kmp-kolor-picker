@@ -17,3 +17,7 @@ captures
 !*.xcworkspace/contents.xcworkspacedata
 **/xcshareddata/WorkspaceSettings.xcsettings
 iosApp/DerivedData
+# dokka generated files
+docs/api-ref/
+docs/demo/
+site
