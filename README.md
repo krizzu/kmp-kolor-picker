@@ -49,19 +49,6 @@ KolorPicker(
 )
 ```
 
-### Custom configuration
-
-```kotlin
-KolorPicker(
-    initialColor = selectedColor,
-    onColorSelected = { selectedColor = it },
-    pickerConfig = PickerConfig.Circle,
-    alphaTrackConfig = TrackConfig.CircleFilled,
-    hueTrackConfig = TrackConfig.CircleFilled,
-    modifier = Modifier.width(250.dp).height(200.dp),
-)
-```
-
 See [API page](api.md) for full specification. 
 
 
