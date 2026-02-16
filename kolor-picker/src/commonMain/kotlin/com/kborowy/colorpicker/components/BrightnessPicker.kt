@@ -86,8 +86,7 @@ internal fun BrightnessPicker(
     Box(modifier = modifier) {
         Box(
             modifier =
-                Modifier
-                    .padding(config.pickerPadding)
+                Modifier.padding(config.pickerPadding)
                     .clip(RoundedCornerShape(size = config.pickerRadius))
         ) {
             Canvas(modifier = Modifier.fillMaxSize()) {
